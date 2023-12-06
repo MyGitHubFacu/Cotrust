@@ -3,15 +3,20 @@
     "Cotrust": {
       "commandName": "Project",
       "launchBrowser": true,
+      "launchUrl": "https://cotrust.azurewebsites.net/",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
       "dotnetRunMessages": true,
-      "applicationUrl": "https://localhost:7293;http://localhost:5010"
+      "applicationUrl": "https://localhost:7293;http://localhost:5010",
+      "hotReloadEnabled": true
     },
     "IIS Express": {
       "commandName": "IISExpress",
-      "launchBrowser": true
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
     }
   },
   "iisSettings": {
