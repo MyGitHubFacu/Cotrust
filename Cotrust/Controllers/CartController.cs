@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using NuGet.Protocol;
 using System.Diagnostics;
 using System.Security.Claims;
 
@@ -31,7 +32,16 @@ namespace Cotrust.Controllers
                 if (user != null)
                 {
                     List<CartProduct> lcp = await _context.CartProducts.Where(x => x.UserId == ident).Include(x => x.Product).ToListAsync();
-                    ViewData["Products"] = lcp.Count();           
+                    ViewData["Products"] = lcp.Count();
+
+                    double Total = 0;
+                    foreach (CartProduct cp in lcp)
+                    {
+                        Total += cp.Product.Price * cp.Quantity;
+                    }
+
+                    ViewData["Total"] = Total;
+
                     return View(lcp);
                 }                          
             }
