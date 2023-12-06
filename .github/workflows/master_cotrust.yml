@@ -52,6 +52,6 @@ jobs:
         uses: azure/webapps-deploy@v2
         with:
           app-name: 'Cotrust'
-          slot-name: 'Development'
+          slot-name: 'Production'
           package: .
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_F43886B55C4645789868AD01FECF0B1D }}
