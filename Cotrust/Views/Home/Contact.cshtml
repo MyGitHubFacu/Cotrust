@@ -20,7 +20,7 @@
                         <input name="email" type="email" value="@User.FindFirst(System.Security.Claims.ClaimTypes.Email)?.Value" class="form-control" required />
 
                         <label class="mt-2">Mensaje</label>
-                        <input name="body" type="text" class="form-control mb-2" required />
+                        <textarea name="body" class="form-control mb-2" style="height:150px;" required></textarea>
 
                         <input type="submit" value="Enviar" class="btn btn-primary mb-1 mt-2" />
                     </form>
@@ -32,7 +32,7 @@
                         <input name="email" type="email" class="form-control" required />
 
                         <label class="mt-2">Mensaje</label>
-                        <input name="body" type="text" class="input-text mb-2" required />
+                        <textarea name="body" class="form-control mb-2" style="height:150px;" required></textarea>
 
                         <input type="submit" value="Enviar" class="btn btn-primary mb-1 mt-2" />
                     </form>

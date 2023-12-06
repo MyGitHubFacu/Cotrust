@@ -3,7 +3,6 @@
     "Cotrust": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "https://cotrust.azurewebsites.net/",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
