@@ -1,0 +1,80 @@
+﻿@model Cotrust.Models.Product
+
+@{
+    ViewData["Title"] = "Product";
+}
+
+<div class="text-center">
+    <!-- Product section-->
+    <section class="py-5">
+        <div class="container px-4 px-lg-5 my-5">
+            <div class="row gx-4 gx-lg-5 align-items-center">
+                <div class="col-md-6"><img class="card-img-top shadow mb-5 mb-md-0" src="data:image/jpg; base64, @Model.Image" alt="..." /></div>
+                <div class="col-md-6">
+                    @if (Model.Stock > 0) 
+                    { 
+                        <div class="verysmall">DISPONIBLES: @Model.Stock</div> 
+                    }
+                    else
+                    {
+                        <div class="verysmall text-decoration-line-through">AGOTADO</div>
+                    }
+                    <h1 class="display-5 fw-bolder">@Model.Name</h1>
+                    <div class="fs-5 mb-2">
+                    @*<span class="text-decoration-line-through">$45.00</span>*@
+                    <span>$@Model.Price</span>
+                    </div> 
+                    <p class="lead">@Model.Description</p>
+                    <div class="d-flex">
+                        <form asp-controller="Cart" asp-action="AddProduct">
+                            <input type="hidden" name="id" value="@Model.Id" />
+                            <div class="input-group">                             
+                                <input class="form-control text-center me-1" name="quantity" type="number" min="0" value="1" style="max-width: 5rem" />
+                                <button class="btn btn-outline-dark flex-shrink-0" type="submit">
+                                    <i class="bi-cart-fill me-1"></i>
+                                    Agregar al carrito
+                                </button>
+                            </div>                        
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Related items section-->
+    <section class="py-5 bg-light">
+        <div class="container px-4 px-lg-5 mt-3">
+            <h2 class="fw-bolder mb-4">Productos relacionados</h2>
+            <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+                @foreach (var Item in ViewData["RelatedProducts"] as List<Product>)
+                {
+                    <div class="col mb-5">
+                        <div id="@Item.Id" class="card shadow h-100 border-4" onmouseover="cardmouseover(@Item.Id)" onmouseout="cardmouseout(@Item.Id)">
+                            <a class="text-body text-decoration-none" asp-route-Id="@Item.Id" asp-controller="Product" asp-action="Index">
+                                <!-- Product image-->
+                                <img class="card-img-top" src="data:image/jpg; base64, @Item.Image" alt="..." />
+                                <!-- Product details-->
+                                <div class="card-body p-3">
+                                    <div class="text-center">
+                                        <!-- Product name-->
+                                        <h5 class="card-text">@Item.Name</h5>
+                                        <!-- Product price-->
+                                        <span class="product-price">$@Item.Price</span>
+                                        @if (Item.Stock > 0)
+                                        {
+                                            <div class="verysmall">DISPONIBLES: @Item.Stock</div>
+                                        }
+                                        else
+                                        {
+                                            <div class="verysmall text-decoration-line-through">AGOTADO</div>
+                                        }
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </section>
+</div>

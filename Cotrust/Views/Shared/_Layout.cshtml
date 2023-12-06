@@ -1,0 +1,129 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Co-trust - @ViewData["Title"]</title>
+    <link rel="icon" type="image/x-icon" href="~/Contrust.ico" asp-append-version="true" />
+    <link rel="stylesheet" href="~/fontawesome/css/all.min.css" type="text/css">
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/home.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/Cotrust.styles.css" asp-append-version="true" />
+</head>
+
+<body class="img-fluid">
+    <header>
+        <!-- Navigation-->
+        <nav class="navbar navbar-expand-lg navbar-light bg-dark bg-opacity-10">
+            <div class="container px-4 px-lg-5">
+                <img height="40" src="~/img/Future.png" alt="..." />
+                <a class="navbar-brand px-3" asp-area="" asp-controller="Home" asp-action="Index">Co-trust</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+                        <li class="nav-item" onmouseover="layoutmouseover('index')" onmouseout="layoutmouseout('index')">
+                            <a id="index" class="nav-link active" asp-area="" asp-controller="Home" asp-action="Index">Inicio</a>
+                        </li>
+                        <li class="nav-item" onmouseover="layoutmouseover('about')" onmouseout="layoutmouseout('about')">
+                            <a id="about" class="nav-link active" asp-area="" asp-controller="Home" asp-action="About">Nosotros</a>
+                        </li>
+                        <li class="nav-item" onmouseover="layoutmouseover('contact')" onmouseout="layoutmouseout('contact')">
+                            <a id="contact" class="nav-link active" asp-area="" asp-controller="Home" asp-action="Contact">Contactos</a>
+                        </li>
+                        <li class="nav-item" onmouseover="layoutmouseover('help')" onmouseout="layoutmouseout('help')">
+                            <a id="help" class="nav-link active" asp-area="" asp-controller="Home" asp-action="Help">Ayuda</a>
+                        </li>
+
+                        @if (User.Identity != null && User.Identity.IsAuthenticated)
+                        {
+                            /*Verifica si el usuario es Admin o Staff y activa los controles necesarios*/
+                            if (User.FindFirst(System.Security.Claims.ClaimTypes.Role)?.Value == Cotrust.Models.User.TypeOfUser.Staff.ToString() | User.FindFirst(System.Security.Claims.ClaimTypes.Role)?.Value == Cotrust.Models.User.TypeOfUser.Admin.ToString())
+                            {
+                                <li class="nav-item" onmouseover="layoutmouseover('products')" onmouseout="layoutmouseout('products')">
+                                    <a id="products" class="nav-link active" asp-area="" asp-controller="Products" asp-action="Index">Productos</a>
+                                </li>
+                            }
+
+                            /*Verifica si el usuario es Admin y activa los controles necesarios*/
+                            if (User.FindFirst(System.Security.Claims.ClaimTypes.Role)?.Value == Cotrust.Models.User.TypeOfUser.Admin.ToString())
+                            {                               
+                                <li class="nav-item" onmouseover="layoutmouseover('usuarios')" onmouseout="layoutmouseout('usuarios')">
+                                    <a id="usuarios" class="nav-link active" asp-area="" asp-controller="Users" asp-action="Index">Usuarios</a>
+                                </li>
+                            }                          
+                        }
+                    </ul>
+
+                    <div class="d-flex">
+                        
+                        @if (Convert.ToInt32(ViewData["Products"]) > 0)
+                        {
+                            <a class="btn btn-outline-dark me-3" asp-controller="Cart" asp-action="Index">
+                                <i class="fas fa-fw fa-shopping-cart"></i>
+                                <span>@ViewData["Products"]</span>
+                            </a>
+                        }
+                        else
+                        {
+                            <a class="btn btn-outline-secondary me-3" asp-controller="Cart" asp-action="Index">
+                                <i class="fas fa-fw fa-shopping-cart"></i>
+                                <span>0</span>
+                            </a>
+                        }
+
+
+
+                        @if (User.Identity != null && User.Identity.IsAuthenticated)
+                        {
+                            <div class="navbar-collapse">
+                                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                                    <li class="navbar-collapse dropdown">
+                                        <a class="navbar-collapse dropdown-toggle text-body text-decoration-none" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
+                                            <div class="text-black fw-semibold">@User.Identity.Name</div>
+                                            <i class="fas fa-fw fa-user"></i>
+                                        </a>
+                                        <ul class="dropdown-menu text-body" aria-labelledby="navbarDropdown">
+                                            <li><a class="dropdown-item text-body" asp-area="" asp-controller="User" asp-action="Account">Cuenta</a></li>
+                                            <li><a class="dropdown-item text-body" asp-area="" asp-controller="Buys" asp-action="Index">Compras</a></li>
+                                            <li><a class="dropdown-item text-body" asp-area="" asp-controller="Directions" asp-action="Index">Direcciones</a></li>
+                                            <li><a class="dropdown-item text-body" asp-area="" asp-controller="Packages" asp-action="Index">Plantillas</a></li>
+                                            <li><hr class="dropdown-divider" /></li>
+                                            <li><a class="dropdown-item text-body" asp-area="" asp-controller="User" asp-action="Logout">Cerrar sesión</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                        }
+                        else
+                        {
+                            <a class="navbar-collapse text-body text-decoration-none" asp-area="" asp-controller="User" asp-action="Login">
+                                <div class="text-black fw-semibold">Iniciar sesión</div>
+                                <i class="fas fa-fw fa-user"></i>
+                            </a>
+                        }
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <!-- Footer-->
+    <footer class="py-5 bg-dark">
+        <div class="container">
+            <p class="m-0 text-center text-white">Copyright &copy; Co-trust 2023</p>
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,62 @@
+﻿@model Cotrust.Models.Direction
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<div class="text-center mt-2">
+    <div class="card-title">Direcciones</div>
+</div>
+
+<center>
+    <div class="card shadow mb-5 mt-2 w-50">
+        <div class="card-header py-3">
+            <div class="row">
+                <form asp-action="Edit">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="Id" />
+                    <input type="hidden" asp-for="UserId" />
+                    <div class="form-group mb-1">
+                        Domicilio
+                        <input asp-for="Address" class="form-control" />
+                        <span asp-validation-for="Address" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mb-1">
+                        Ciudad
+                        <input asp-for="City" class="form-control" />
+                        <span asp-validation-for="City" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mb-1">
+                        Región
+                        <input asp-for="Region" class="form-control" />
+                        <span asp-validation-for="Region" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mb-1">
+                        País
+                        <input asp-for="Country" class="form-control" />
+                        <span asp-validation-for="Country" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mb-1">
+                        Código postal
+                        <input asp-for="PostalCode" class="form-control" />
+                        <span asp-validation-for="PostalCode" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mt-3">
+                        <input type="submit" value="Guardar" class="btn btn-primary" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</center>
+
+<div>
+    <a asp-action="Index" class="btn btn-outline-primary">
+        <i class="fas fa-solid fa-arrow-left"></i>
+        Volver
+    </a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

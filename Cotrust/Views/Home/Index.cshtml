@@ -1,0 +1,86 @@
+﻿@model IEnumerable<Cotrust.Models.Product>
+
+@{
+    ViewData["Title"] = "Home";
+}
+
+<div class="text-center">
+    <!-- Header-->
+    <header class="bg-dark py-5">
+        <div class="container px-4 px-lg-5 my-5">
+            <div class="text-center text-white">
+                <h1 class="display-4 fw-bolder">Co-trust latam</h1>
+                <p class="lead fw-normal text-white-50 mb-0">Electrónica para el automatismo industrial</p>
+            </div>
+        </div>
+    </header>
+
+    <div class="text-center">
+        <nav class="navbar navbar-expand-lg navbar-light bg-dark bg-opacity-25">
+            <div class="container px-4 px-lg-5">
+                <ul class="navbar-nav me-auto mb-5 mb-lg-auto ms-lg-auto">
+                    <!--Genero el menu de productos-->
+                    <li class="nav-item me-3" onmouseover="menumouseover('PLC')" onmouseout="menumouseout('PLC')">
+                        <a id="PLC" class="navbar-brand" asp-controller="Home" asp-action="Index" asp-route-id="1">PLC</a>
+                    </li>
+                    <li class="nav-item me-3" onmouseover="menumouseover('Module')" onmouseout="menumouseout('Module')">
+                        <a id="Module" class="navbar-brand" asp-controller="Home" asp-action="Index" asp-route-id="2">Module</a>
+                    </li>
+                    <li class="nav-item me-3" onmouseover="menumouseover('HMI')" onmouseout="menumouseout('HMI')">
+                        <a id="HMI" class="navbar-brand" asp-controller="Home" asp-action="Index" asp-route-id="3">HMI</a>
+                    </li>
+                    <li class="nav-item me-3" onmouseover="menumouseover('Servo')" onmouseout="menumouseout('Servo')">
+                        <a id="Servo" class="navbar-brand" asp-controller="Home" asp-action="Index" asp-route-id="4">Servo</a>
+                    </li>
+                    <li class="nav-item me-3" onmouseover="menumouseover('Driver')" onmouseout="menumouseout('Driver')">
+                        <a id="Driver" class="navbar-brand" asp-controller="Home" asp-action="Index" asp-route-id="5">Driver</a>
+                    </li> 
+                    <li class="nav-item me-3" onmouseover="menumouseover('Software')" onmouseout="menumouseout('Software')">
+                        <a id="Software" class="navbar-brand" asp-controller="Home" asp-action="Index" asp-route-id="6">Software</a>
+                    </li> 
+                    <li class="nav-item me-3" onmouseover="menumouseover('Kits')" onmouseout="menumouseout('Kits')">
+                        <a id="Kits" class="navbar-brand" asp-controller="Home" asp-action="Index" asp-route-id="7">Kits</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+
+    <!-- Section-->
+    <section class="py-5">
+        <div class="container px-4 px-lg-5 mt-5">
+            <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+                @foreach (var Item in Model)
+                {
+                    <div class="col mb-5">
+                        <div id="@Item.Id" class="card shadow h-100 border-4" onmouseover="cardmouseover(@Item.Id)" onmouseout="cardmouseout(@Item.Id)">
+                            <a class="text-body text-decoration-none" asp-route-Id="@Item.Id" asp-controller="Product" asp-action="Index">
+                                <!-- Product image-->
+                                <img class="card-img-top" src="data:image/jpg; base64, @Item.Image" alt="..." />
+                                <!-- Product details-->
+                                <div class="card-body p-3">
+                                    <div class="text-center">
+                                        <!-- Product name-->
+                                        <h5 class="card-text">@Item.Name</h5>
+                                        <!-- Product price-->
+                                        <span class="product-price">$@Item.Price</span>
+                                        @if (Item.Stock > 0)
+                                        {
+                                            <div class="verysmall">DISPONIBLES: @Item.Stock</div>
+                                        }
+                                        else
+                                        {
+                                            <div class="verysmall text-decoration-line-through">AGOTADO</div>
+                                        }
+                                    </div>
+                                </div>
+                            </a>                          
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </section>
+</div>
+
+

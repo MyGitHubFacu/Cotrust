@@ -1,0 +1,82 @@
+﻿@model IEnumerable<Cotrust.Models.Direction>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="text-center mt-2">
+    <div class="card-title">Direcciones</div>
+</div>
+
+<p>
+    <a class="btn btn-outline-primary" asp-action="Create">
+        <i class="fas fa-plus-circle"></i>
+        Crear nueva dirección
+    </a>
+</p>
+
+<div class="text-center">
+    <div class="card shadow mb-5 mt-2 w-100">
+        <div class="card-header py-3">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            Domicilio
+                        </th>
+                        <th>
+                            Ciudad
+                        </th>
+                        <th>
+                            Región
+                        </th>
+                        <th>
+                            País
+                        </th>
+                        <th>
+                            Código postal
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Address)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.City)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Region)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Country)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.PostalCode)
+                            </td>
+                            <td>
+                                <a class="btn btn-outline-success" asp-action="Edit" asp-route-id="@item.Id">
+                                    <i class="fas fa-edit"></i>
+                                    Editar
+                                </a> |
+                                <a class="btn btn-outline-primary" asp-action="Details" asp-route-id="@item.Id">
+                                    <i class="fas fa-info"></i>
+                                    Detalles
+                                </a> |
+                                <a class="btn btn-outline-danger" asp-action="Delete" asp-route-id="@item.Id">
+                                    <i class="fas fa-trash"></i>
+                                    Borrar
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+

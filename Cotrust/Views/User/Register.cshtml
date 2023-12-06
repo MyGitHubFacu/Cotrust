@@ -1,0 +1,55 @@
+﻿@model Cotrust.Models.User
+
+@{
+    ViewData["Title"] = "Register";
+}
+
+<div class="text-center mt-2">
+    <div class="card-title">Registro</div>
+</div>
+
+<div class="text-center">
+    <center>
+        @if (User.Identity != null && User.Identity.IsAuthenticated)
+        {
+            <p>Ya hay una sensión iniciada. Redirigiendo...</p>
+            <script>
+                setTimeout(funtion() {
+                    window.location.href = '@Url.Action("Index", "Home")';
+                }, 3000);
+            </script>
+        }
+        else
+        {
+            <div class="card shadow mb-5 mt-2 w-50">
+                <div class="card-header py-3">
+                    <form asp-action="Register" method="post">
+                        <div class="form-group mb-2 mt-2">
+                            Nombre
+                            <input asp-for="Name" class="form-control" />
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+                        <div class="form-group mb-2">
+                            E-mail
+                            <input asp-for="Email" type="email" class="form-control" />
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+                        <div class="form-group mb-2">
+                            Contraseña
+                            <input asp-for="Password" type="password" class="form-control" />
+                            <span asp-validation-for="Password" class="text-danger"></span>
+                        </div>
+                        <div class="form-group mb-2">
+                            Confirmar contraseña
+                            <input asp-for="Password2" type="password" class="form-control" />
+                            <span asp-validation-for="Password2" class="text-danger"></span>
+                        </div>
+                        <input type="submit" value="Registrarme" class="btn btn-primary mb-1 mt-2" />
+                    </form>
+
+                    <a asp-action="Login">Iniciar sesión</a>
+                </div>
+            </div>
+        }
+    </center>
+</div>

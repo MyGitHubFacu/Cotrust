@@ -1,0 +1,54 @@
+﻿@model Cotrust.Models.User
+
+@{
+    ViewData["Title"] = "Log in";
+}
+
+<div class="text-center mt-2">
+    <div class="card-title">Panel de usuario</div>
+</div>
+
+<div class="text-center">
+    <center>
+        <div class="card shadow mb-5 mt-2 w-50">
+            <div class="card-header py-3">
+                <form asp-action="Account" method="post">
+                    <input type="hidden" asp-for="Id" />
+                    <input type="hidden" asp-for="Type" />
+                    <input type="hidden" asp-for="Email" />                   
+                    <input type="hidden" asp-for="EmailConfirmed" />
+                    <div class="form-group mb-2">
+                        <label class="me-2 fs-5">E-mail:</label>
+                        <label class="fs-5">@Model.Email</label>
+                        <div class="text-info small">Para cambiar el E-mail por favor comuniquese con el servicio al cliente.</div>
+                    </div>
+                    <div class="form-group mb-2 mt-2">
+                        Nombre
+                        <input asp-for="Name" class="form-control" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mb-2">
+                        Contraseña
+                        <input asp-for="Password" type="password" class="form-control" />
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mb-2">
+                        Confirmar contraseña
+                        <input asp-for="Password2" type="password" class="form-control" />
+                        <span asp-validation-for="Password2" class="text-danger"></span>
+                    </div>
+                    <input type="submit" value="Guardar cambios" class="btn btn-primary mb-1 mt-2" />
+                </form>
+
+                @if (Model.EmailConfirmed == false)
+                {
+                    <ul class="navbar-nav alert-warning w-50 mt-3">
+                        <il class="nav-item me-auto ms-auto fs-5">Falta confirmar E-mail</il>
+                        <il class="nav-item"><a class="btn btn-outline-warning" asp-controller="" asp-action="">Confirmar E-mail</a></il>
+                    </ul>      
+                }
+
+            </div>
+        </div>
+    </center>
+</div>

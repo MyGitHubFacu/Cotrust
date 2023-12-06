@@ -1,0 +1,45 @@
+﻿@{
+    ViewData["Title"] = "Contact";
+}
+
+<div class="text-center mt-2">
+    <div class="card-title">Contacto</div>
+</div>
+
+
+<div class="text-center">
+    <center>
+        <div class="card shadow mb-5 mt-2 w-75">
+            <div class="card-header py-3">
+                <h3>Envía tu consulta al correo consultas@cotrust.com</h3>
+
+                @if (User.Identity != null && User.Identity.IsAuthenticated)
+                {
+                    <form asp-action="Contact">
+                        <label class="mt-2">E-mail</label>
+                        <input name="email" type="email" value="@User.FindFirst(System.Security.Claims.ClaimTypes.Email)?.Value" class="form-control" required />
+
+                        <label class="mt-2">Mensaje</label>
+                        <input name="body" type="text" class="form-control mb-2" required />
+
+                        <input type="submit" value="Enviar" class="btn btn-primary mb-1 mt-2" />
+                    </form>
+                }
+                else
+                {
+                    <form asp-action="Contact">
+                        <label class="mt-2">E-mail</label>
+                        <input name="email" type="email" class="form-control" required />
+
+                        <label class="mt-2">Mensaje</label>
+                        <input name="body" type="text" class="input-text mb-2" required />
+
+                        <input type="submit" value="Enviar" class="btn btn-primary mb-1 mt-2" />
+                    </form>
+                }
+
+                <div class="text-success">@ViewBag.Message</div>
+            </div>
+        </div>
+    </center>
+</div>

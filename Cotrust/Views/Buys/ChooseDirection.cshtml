@@ -1,0 +1,40 @@
+﻿@model IEnumerable<Cotrust.Models.Direction>
+
+@{
+    ViewData["Title"] = "Buying";
+}
+
+<div class="text-center">
+    <center>
+        <div class="card shadow mb-5 mt-5 w-75">
+            <div class="card-header py-3">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>
+                                Dirección
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @(item.Address + ", " + item.City + ", " + item.Region + ", " + item.Country + " - " + item.PostalCode)
+                                </td>                              
+                                <td>
+                                    <a asp-controller="Buys" asp-action="DirectionChoosed" asp-route-id="@item.Id">
+                                        <i class="fas fa-check-circle"></i>
+                                        Seleccionar
+                                    </a>  
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </center>
+</div>
