@@ -13,7 +13,7 @@ builder.Services.AddTransient<IEmailSender, EmailSender>();
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddDbContext<CotrustDbContext>(options =>
-        options.UseSqlServer(builder.Configuration.GetConnectionString("Connection")));
+        options.UseSqlServer(builder.Configuration.GetConnectionString("Connection_1")));
 
 builder.Services.AddAuthorization(options =>
 {
