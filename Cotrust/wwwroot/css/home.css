@@ -10838,15 +10838,25 @@ textarea.form-control-lg {
 }
 
 .product-price {
-    position: absolute;
     background: #0088FF;
-    padding: 3px 12px;
+    padding: 2px 8px;
+    margin-left: auto;
     text-align: center;
     display: inline-block;
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 500;
     color: #fff;
     border-radius: 7px;
-    margin-top: -225px;
-    margin-left: 50px;
+}
+
+.product-stock {
+    background: #44AAFF;
+    padding: 2px 8px;
+    margin-right: auto;
+    text-align: center;
+    display: inline-block;
+    font-size: 16px;
+    font-weight: 500;
+    color: #fff;
+    border-radius: 7px;
 }
