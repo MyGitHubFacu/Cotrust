@@ -32,16 +32,23 @@ namespace Cotrust.Controllers
             {
                 await UploadCart();
 
-                switch (Id)
+                try
                 {
-                    case 1: return View(await _context.Product.Where(x => x.Kind == Product.TypeOfProduct.PLC).ToListAsync());
-                    case 2: return View(await _context.Product.Where(x => x.Kind == Product.TypeOfProduct.Module).ToListAsync());
-                    case 3: return View(await _context.Product.Where(x => x.Kind == Product.TypeOfProduct.HMI).ToListAsync());
-                    case 4: return View(await _context.Product.Where(x => x.Kind == Product.TypeOfProduct.Servo).ToListAsync());
-                    case 5: return View(await _context.Product.Where(x => x.Kind == Product.TypeOfProduct.Driver).ToListAsync());
-                    case 6: return View(await _context.Product.Where(x => x.Kind == Product.TypeOfProduct.Software).ToListAsync());
-                    case 7: return View(await _context.Product.Where(x => x.Kind == Product.TypeOfProduct.Kits).ToListAsync());
-                    default: return View(await _context.Product.ToListAsync());
+                    switch (Id)
+                    {
+                        case 1: return View(await _context.Product.Where(x => x.Kind == Product.TypeOfProduct.PLC).ToListAsync());
+                        case 2: return View(await _context.Product.Where(x => x.Kind == Product.TypeOfProduct.Module).ToListAsync());
+                        case 3: return View(await _context.Product.Where(x => x.Kind == Product.TypeOfProduct.HMI).ToListAsync());
+                        case 4: return View(await _context.Product.Where(x => x.Kind == Product.TypeOfProduct.Servo).ToListAsync());
+                        case 5: return View(await _context.Product.Where(x => x.Kind == Product.TypeOfProduct.Driver).ToListAsync());
+                        case 6: return View(await _context.Product.Where(x => x.Kind == Product.TypeOfProduct.Software).ToListAsync());
+                        case 7: return View(await _context.Product.Where(x => x.Kind == Product.TypeOfProduct.Kits).ToListAsync());
+                        default: return View(await _context.Product.ToListAsync());
+                    }
+                }
+                catch
+                {
+                    return View(new List<Product>());
                 }
             }
             else
