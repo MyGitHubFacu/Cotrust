@@ -46,8 +46,9 @@ namespace Cotrust.Controllers
                         default: return View(await _context.Product.ToListAsync());
                     }
                 }
-                catch
+                catch (Exception ex)
                 {
+                    ViewData["Exception"] = ex.Message;
                     return View(new List<Product>());
                 }
             }
