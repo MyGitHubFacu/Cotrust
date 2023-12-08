@@ -10839,8 +10839,8 @@ textarea.form-control-lg {
 
 .product-price {
     background: #0088FF;
-    padding: 2px 8px;
-    margin-left: auto;
+    padding: 2px;
+    width: 4.4rem;
     text-align: center;
     display: inline-block;
     font-size: 16px;
@@ -10851,8 +10851,8 @@ textarea.form-control-lg {
 
 .product-stock {
     background: #44AAFF;
-    padding: 2px 8px;
-    margin-right: auto;
+    padding: 2px;
+    width: 8.4rem;
     text-align: center;
     display: inline-block;
     font-size: 16px;
