@@ -27,24 +27,32 @@ namespace Cotrust.Controllers
 
         public async Task<IActionResult> Index(string search = "", User.TypeOfUser? type = null)
         {
-            if (User.Identity != null && User.Identity.IsAuthenticated)
+            try
             {
-                int ident = Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
-                User? user = await _context.User.FirstOrDefaultAsync(x => x.Id == ident);
-
-                if (user != null && user.Type == Models.User.TypeOfUser.Admin)
+                if (User.Identity != null && User.Identity.IsAuthenticated)
                 {
-                    if (type == null)
+                    int ident = Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
+                    User? user = await _context.User.FirstOrDefaultAsync(x => x.Id == ident);
+
+                    if (user != null && user.Type == Models.User.TypeOfUser.Admin)
                     {
-                        return View(await _context.User.Where(x => x.Name.Contains(search) | x.Email.Contains(search)).ToListAsync());
-                    }
-                    else
-                    {
-                        return View(await _context.User.Where(x => x.Type == type).ToListAsync());
+                        if (type == null)
+                        {
+                            return View(await _context.User.Where(x => x.Name.Contains(search) | x.Email.Contains(search)).ToListAsync());
+                        }
+                        else
+                        {
+                            return View(await _context.User.Where(x => x.Type == type).ToListAsync());
+                        }
                     }
                 }
+                return RedirectToAction("Index", "Home");
             }
-            return RedirectToAction("Index", "Home");
+            catch (Exception ex)
+            {
+                TempData["Message"] = ex.Message;
+                return RedirectToAction("Error", "Home");
+            }
         }
 
         #endregion
@@ -53,21 +61,28 @@ namespace Cotrust.Controllers
 
         public async Task<IActionResult> Details(int? id)
         {
-            if (User.Identity != null && User.Identity.IsAuthenticated)
+            try
             {
-                int ident = Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
-                User? user = await _context.User.FirstOrDefaultAsync(x => x.Id == ident);
-
-                if (user != null && user.Type == Models.User.TypeOfUser.Admin)
+                if (User.Identity != null && User.Identity.IsAuthenticated)
                 {
-                    if (id == null || _context.User == null) { return NotFound(); }
-                    var us = await _context.User.FirstOrDefaultAsync(m => m.Id == id);
-                    if (us == null) { return NotFound(); }
-                    return View(us);
-                }
-            }
-            return RedirectToAction("Index", "Home");
+                    int ident = Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
+                    User? user = await _context.User.FirstOrDefaultAsync(x => x.Id == ident);
 
+                    if (user != null && user.Type == Models.User.TypeOfUser.Admin)
+                    {
+                        if (id == null || _context.User == null) { return NotFound(); }
+                        var us = await _context.User.FirstOrDefaultAsync(m => m.Id == id);
+                        if (us == null) { return NotFound(); }
+                        return View(us);
+                    }
+                }
+                return RedirectToAction("Index", "Home");
+            }
+            catch (Exception ex)
+            {
+                TempData["Message"] = ex.Message;
+                return RedirectToAction("Error", "Home");
+            }
         }
 
         #endregion
@@ -76,30 +91,46 @@ namespace Cotrust.Controllers
 
         public async Task<IActionResult> Create()
         {
-            if (User.Identity != null && User.Identity.IsAuthenticated)
+            try
             {
-                int ident = Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
-                User? user = await _context.User.FirstOrDefaultAsync(x => x.Id == ident);
-
-                if (user != null && user.Type == Models.User.TypeOfUser.Admin)
+                if (User.Identity != null && User.Identity.IsAuthenticated)
                 {
-                    return View();
+                    int ident = Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
+                    User? user = await _context.User.FirstOrDefaultAsync(x => x.Id == ident);
+
+                    if (user != null && user.Type == Models.User.TypeOfUser.Admin)
+                    {
+                        return View();
+                    }
                 }
+                return RedirectToAction("Index", "Home");
             }
-            return RedirectToAction("Index", "Home");           
+            catch (Exception ex)
+            {
+                TempData["Message"] = ex.Message;
+                return RedirectToAction("Error", "Home");
+            }         
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Name,Email,Password,Type,EmailConfirmed")] User user)
         {
-            if (ModelState.IsValid)
+            try
             {
-                _context.Add(user);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                if (ModelState.IsValid)
+                {
+                    _context.Add(user);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+                return View(user);
             }
-            return View(user);
+            catch (Exception ex)
+            {
+                TempData["Message"] = ex.Message;
+                return RedirectToAction("Error", "Home");
+            }
         }
 
         #endregion
@@ -108,43 +139,59 @@ namespace Cotrust.Controllers
 
         public async Task<IActionResult> Edit(int? id)
         {
-            if (User.Identity != null && User.Identity.IsAuthenticated)
+            try
             {
-                int ident = Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
-                User? user = await _context.User.FirstOrDefaultAsync(x => x.Id == ident);
-
-                if (user != null && user.Type == Models.User.TypeOfUser.Admin)
+                if (User.Identity != null && User.Identity.IsAuthenticated)
                 {
-                    if (id == null || _context.User == null) { return NotFound(); }
-                    var us = await _context.User.FindAsync(id);
-                    if (us == null) { return NotFound(); }
-                    return View(us);
+                    int ident = Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
+                    User? user = await _context.User.FirstOrDefaultAsync(x => x.Id == ident);
+
+                    if (user != null && user.Type == Models.User.TypeOfUser.Admin)
+                    {
+                        if (id == null || _context.User == null) { return NotFound(); }
+                        var us = await _context.User.FindAsync(id);
+                        if (us == null) { return NotFound(); }
+                        return View(us);
+                    }
                 }
+                return RedirectToAction("Index", "Home");
             }
-            return RedirectToAction("Index", "Home");
+            catch (Exception ex)
+            {
+                TempData["Message"] = ex.Message;
+                return RedirectToAction("Error", "Home");
+            }
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Email,Password,Type,EmailConfirmed")] User user)
         {
-            if (id != user.Id) { return NotFound(); }
-
-            if (ModelState.IsValid)
+            try
             {
-                try
+                if (id != user.Id) { return NotFound(); }
+
+                if (ModelState.IsValid)
                 {
-                    _context.Update(user);
-                    await _context.SaveChangesAsync();
+                    try
+                    {
+                        _context.Update(user);
+                        await _context.SaveChangesAsync();
+                    }
+                    catch (DbUpdateConcurrencyException)
+                    {
+                        if (!UserExists(user.Id)) { return NotFound(); }
+                        else { throw; }
+                    }
+                    return RedirectToAction(nameof(Index));
                 }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!UserExists(user.Id)) { return NotFound(); }
-                    else { throw; }
-                }
-                return RedirectToAction(nameof(Index));
+                return View(user);
             }
-            return View(user);
+            catch (Exception ex)
+            {
+                TempData["Message"] = ex.Message;
+                return RedirectToAction("Error", "Home");
+            }
         }
 
         #endregion
@@ -153,31 +200,47 @@ namespace Cotrust.Controllers
 
         public async Task<IActionResult> Delete(int? id)
         {
-            if (User.Identity != null && User.Identity.IsAuthenticated)
+            try
             {
-                int ident = Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
-                User? user = await _context.User.FirstOrDefaultAsync(x => x.Id == ident);
-
-                if (user != null && user.Type == Models.User.TypeOfUser.Admin)
+                if (User.Identity != null && User.Identity.IsAuthenticated)
                 {
-                    if (id == null || _context.User == null) { return NotFound(); }
-                    var us = await _context.User.FirstOrDefaultAsync(m => m.Id == id);
-                    if (us == null) { return NotFound(); }
-                    return View(us);
+                    int ident = Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
+                    User? user = await _context.User.FirstOrDefaultAsync(x => x.Id == ident);
+
+                    if (user != null && user.Type == Models.User.TypeOfUser.Admin)
+                    {
+                        if (id == null || _context.User == null) { return NotFound(); }
+                        var us = await _context.User.FirstOrDefaultAsync(m => m.Id == id);
+                        if (us == null) { return NotFound(); }
+                        return View(us);
+                    }
                 }
+                return RedirectToAction("Index", "Home");
             }
-            return RedirectToAction("Index", "Home");
+            catch (Exception ex)
+            {
+                TempData["Message"] = ex.Message;
+                return RedirectToAction("Error", "Home");
+            }
         }
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.User == null) { return Problem("Entity set 'CotrustDbContext.User'  is null."); }
-            var user = await _context.User.FindAsync(id);
-            if (user != null) { _context.User.Remove(user); }        
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            try
+            {
+                if (_context.User == null) { return Problem("Entity set 'CotrustDbContext.User'  is null."); }
+                var user = await _context.User.FindAsync(id);
+                if (user != null) { _context.User.Remove(user); }
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception ex)
+            {
+                TempData["Message"] = ex.Message;
+                return RedirectToAction("Error", "Home");
+            }
         }
 
         #endregion

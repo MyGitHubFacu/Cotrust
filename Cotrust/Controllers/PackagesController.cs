@@ -23,17 +23,25 @@ namespace Cotrust.Controllers
 
         public async Task<IActionResult> Index()
         {
-            if (User.Identity != null && User.Identity.IsAuthenticated)
+            try
             {
-                int ident = Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
-                User? user = await _context.User.Include(x => x.Products).FirstOrDefaultAsync(x => x.Id == ident);
-                if (user != null)
+                if (User.Identity != null && User.Identity.IsAuthenticated)
                 {
-                    ViewData["Products"] = user.Products.Count;
-                    return View(await _context.Package.Include(x => x.Products).Where(x => x.UserId == ident).ToListAsync());
+                    int ident = Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
+                    User? user = await _context.User.Include(x => x.Products).FirstOrDefaultAsync(x => x.Id == ident);
+                    if (user != null)
+                    {
+                        ViewData["Products"] = user.Products.Count;
+                        return View(await _context.Package.Include(x => x.Products).Where(x => x.UserId == ident).ToListAsync());
+                    }
                 }
+                return RedirectToAction("AccessDenied", "User");
             }
-            return RedirectToAction("AccessDenied", "User");
+            catch (Exception ex)
+            {
+                TempData["Message"] = ex.Message;
+                return RedirectToAction("Error", "Home");
+            }
         }
 
         #endregion
@@ -42,19 +50,27 @@ namespace Cotrust.Controllers
 
         public async Task<IActionResult> Products(int id)
         {
-            if (User.Identity != null && User.Identity.IsAuthenticated)
+            try
             {
-                int ident = Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
-                User? user = await _context.User.Include(x => x.Products).FirstOrDefaultAsync(x => x.Id == ident);
-                if (user != null)
+                if (User.Identity != null && User.Identity.IsAuthenticated)
                 {
-                    ViewData["Products"] = user.Products.Count;
-                    Package P = await _context.Package.FirstAsync(x => x.Id == id);
-                    ViewData["PackageName"] = P.Name;
-                    return View(await _context.PackageProducts.Where(x => x.PackageId == id).Include(x => x.Product).ToListAsync());
+                    int ident = Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
+                    User? user = await _context.User.Include(x => x.Products).FirstOrDefaultAsync(x => x.Id == ident);
+                    if (user != null)
+                    {
+                        ViewData["Products"] = user.Products.Count;
+                        Package P = await _context.Package.FirstAsync(x => x.Id == id);
+                        ViewData["PackageName"] = P.Name;
+                        return View(await _context.PackageProducts.Where(x => x.PackageId == id).Include(x => x.Product).ToListAsync());
+                    }
                 }
+                return RedirectToAction("AccessDenied", "User");
             }
-            return RedirectToAction("AccessDenied", "User");
+            catch (Exception ex)
+            {
+                TempData["Message"] = ex.Message;
+                return RedirectToAction("Error", "Home");
+            }
         }
 
         #endregion
@@ -63,58 +79,74 @@ namespace Cotrust.Controllers
 
         public async Task<IActionResult> PackageName()
         {
-            if (User.Identity != null && User.Identity.IsAuthenticated)
+            try
             {
-                int ident = Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
-                User? user = await _context.User.Include(x => x.Products).FirstOrDefaultAsync(x => x.Id == ident);
-
-                if (user != null && user.Products.Count > 0)
+                if (User.Identity != null && User.Identity.IsAuthenticated)
                 {
-                    return View();
+                    int ident = Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
+                    User? user = await _context.User.Include(x => x.Products).FirstOrDefaultAsync(x => x.Id == ident);
+
+                    if (user != null && user.Products.Count > 0)
+                    {
+                        return View();
+                    }
                 }
+                return RedirectToAction("Index", "Cart");
             }
-            return RedirectToAction("Index", "Cart");       
+            catch (Exception ex)
+            {
+                TempData["Message"] = ex.Message;
+                return RedirectToAction("Error", "Home");
+            }  
         }
 
         public async Task<IActionResult> AddPackage(string name)
         {
-            if (User.Identity != null && User.Identity.IsAuthenticated)
+            try
             {
-                int ident = Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
-                User? user = await _context.User.Include(x => x.Products).FirstOrDefaultAsync(x => x.Id == ident);
-
-                if (user != null)
+                if (User.Identity != null && User.Identity.IsAuthenticated)
                 {
-                    if (_context.Package.FirstOrDefault(x => x.Name == name) == null)
+                    int ident = Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
+                    User? user = await _context.User.Include(x => x.Products).FirstOrDefaultAsync(x => x.Id == ident);
+
+                    if (user != null)
                     {
-                        Package pck = new Package();
-                        pck.UserId = ident;
-                        pck.Name = name;
-                        _context.Add(pck);
-                        await _context.SaveChangesAsync();
-
-                        Package p = await _context.Package.FirstAsync(x => x.Name == pck.Name);
-
-                        foreach (CartProduct cp in user.Products)
+                        if (_context.Package.FirstOrDefault(x => x.Name == name) == null)
                         {
-                            if (cp != null)
-                            {
-                                PackageProduct pp = new PackageProduct();
-                                pp.ProductId = cp.ProductId;
-                                pp.Quantity = cp.Quantity;
-                                pp.PackageId = p.Id;
+                            Package pck = new Package();
+                            pck.UserId = ident;
+                            pck.Name = name;
+                            _context.Add(pck);
+                            await _context.SaveChangesAsync();
 
-                                _context.Add(pp);
+                            Package p = await _context.Package.FirstAsync(x => x.Name == pck.Name);
+
+                            foreach (CartProduct cp in user.Products)
+                            {
+                                if (cp != null)
+                                {
+                                    PackageProduct pp = new PackageProduct();
+                                    pp.ProductId = cp.ProductId;
+                                    pp.Quantity = cp.Quantity;
+                                    pp.PackageId = p.Id;
+
+                                    _context.Add(pp);
+                                }
                             }
+                            await _context.SaveChangesAsync();
+                            return RedirectToAction(nameof(Index));
                         }
-                        await _context.SaveChangesAsync();
-                        return RedirectToAction(nameof(Index));
+                        ViewData["NameExist"] = "El nombre ya existe";
+                        return RedirectToAction(nameof(PackageName));
                     }
-                    ViewData["NameExist"] = "El nombre ya existe";
-                    return RedirectToAction(nameof(PackageName));
                 }
+                return RedirectToAction("AccessDenied", "User");
             }
-            return RedirectToAction("AccessDenied", "User");
+            catch (Exception ex)
+            {
+                TempData["Message"] = ex.Message;
+                return RedirectToAction("Error", "Home");
+            }
         }
 
         #endregion
@@ -123,20 +155,25 @@ namespace Cotrust.Controllers
 
         public async Task<IActionResult> DeletePackage(int id)
         {
-            if (_context.Package == null) { return Problem("Entity set 'CotrustDbContext.CartProducts'  is null."); }
-
-            var product = await _context.Package.FindAsync(id);
-            if (product != null) { _context.Package.Remove(product); }
-
-            List<PackageProduct> List = await _context.PackageProducts.Where(x => x.PackageId == id).ToListAsync();
-
-            foreach (PackageProduct p in List)
+            try
             {
-                _context.Remove(p);
-            }
+                if (_context.Package == null) { return Problem("Entity set 'CotrustDbContext.CartProducts'  is null."); }
 
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+                var product = await _context.Package.FindAsync(id);
+                if (product != null) { _context.Package.Remove(product); }
+
+                List<PackageProduct> List = await _context.PackageProducts.Where(x => x.PackageId == id).ToListAsync();
+
+                foreach (PackageProduct p in List) { _context.Remove(p); }
+
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception ex)
+            {
+                TempData["Message"] = ex.Message;
+                return RedirectToAction("Error", "Home");
+            }
         }
 
         #endregion
@@ -145,30 +182,38 @@ namespace Cotrust.Controllers
 
         public async Task<IActionResult> AddToCart(int id)
         {
-            if (_context.Package == null) { return Problem("Entity set 'CotrustDbContext.CartProducts'  is null."); }
-
-            var Package = await _context.Package.FindAsync(id);
-
-            if (Package != null)
+            try
             {
-                List<PackageProduct> List = await _context.PackageProducts.Where(x => x.PackageId == id).ToListAsync();
+                if (_context.Package == null) { return Problem("Entity set 'CotrustDbContext.CartProducts'  is null."); }
 
-                foreach (PackageProduct pp in List)
+                var Package = await _context.Package.FindAsync(id);
+
+                if (Package != null)
                 {
-                    if (pp != null)
-                    {
-                        CartProduct bp = new CartProduct();
-                        bp.UserId = Package.UserId;
-                        bp.ProductId = pp.ProductId;
-                        bp.Quantity = pp.Quantity;
+                    List<PackageProduct> List = await _context.PackageProducts.Where(x => x.PackageId == id).ToListAsync();
 
-                        _context.Add(bp);
+                    foreach (PackageProduct pp in List)
+                    {
+                        if (pp != null)
+                        {
+                            CartProduct bp = new CartProduct();
+                            bp.UserId = Package.UserId;
+                            bp.ProductId = pp.ProductId;
+                            bp.Quantity = pp.Quantity;
+
+                            _context.Add(bp);
+                        }
                     }
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction("Index", "Cart");
                 }
-                await _context.SaveChangesAsync();
-                return RedirectToAction("Index", "Cart");
+                return RedirectToAction(nameof(Index));
             }
-            return RedirectToAction(nameof(Index));
+            catch (Exception ex)
+            {
+                TempData["Message"] = ex.Message;
+                return RedirectToAction("Error", "Home");
+            }
         }
 
         #endregion

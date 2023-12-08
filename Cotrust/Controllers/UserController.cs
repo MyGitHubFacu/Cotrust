@@ -28,11 +28,19 @@ namespace Cotrust.Controllers
         [AllowAnonymous]
         public IActionResult Login()
         {
-            if (User.Identity != null && User.Identity.IsAuthenticated)
+            try
             {
-                return RedirectToAction("Index", "Home");
+                if (User.Identity != null && User.Identity.IsAuthenticated)
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+                return View();
             }
-            return View();
+            catch (Exception ex)
+            {
+                TempData["Message"] = ex.Message;
+                return RedirectToAction("Error", "Home");
+            }
         }
 
         [HttpPost]
@@ -60,9 +68,10 @@ namespace Cotrust.Controllers
                 ModelState.AddModelError("", "Usuario no encontrado.");
                 return View();
             }   
-            catch
+            catch (Exception ex)
             {
-                return View();
+                TempData["Message"] = ex.Message;
+                return RedirectToAction("Error", "Home"); 
             }
         }
 
@@ -73,13 +82,21 @@ namespace Cotrust.Controllers
         [AllowAnonymous]
         public IActionResult Register()
         {
-            return View();
+            try
+            {
+                return View();
+            }
+            catch (Exception ex)
+            {
+                TempData["Message"] = ex.Message;
+                return RedirectToAction("Error", "Home");
+            }         
         }
 
         [HttpPost]
         [AllowAnonymous]
         public async Task<IActionResult> Register(User user)
-        {
+        {          
             try
             {
                 if (user != null)
@@ -113,9 +130,10 @@ namespace Cotrust.Controllers
                 }
                 return View(user);
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                TempData["Message"] = ex.Message;
+                return RedirectToAction("Error", "Home");
             }
         }
 
@@ -125,8 +143,16 @@ namespace Cotrust.Controllers
 
         public async Task<IActionResult> Logout()
         {
-            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            return RedirectToAction("Login");
+            try
+            {
+                await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+                return RedirectToAction("Login");
+            }
+            catch (Exception ex)
+            {
+                TempData["Message"] = ex.Message;
+                return RedirectToAction("Error", "Home");
+            }
         }
 
         #endregion
@@ -136,7 +162,17 @@ namespace Cotrust.Controllers
         [AllowAnonymous]
         public IActionResult AccessDenied()
         {
-            return View();
+            try
+            {
+                return View();
+            }
+            catch (Exception ex)
+            {
+                TempData["Message"] = ex.Message;
+                return RedirectToAction("Error", "Home");
+            }
+
+            
         }
 
         #endregion
@@ -145,17 +181,25 @@ namespace Cotrust.Controllers
 
         public async Task<IActionResult> Account()
         {
-            if (User.Identity != null && User.Identity.IsAuthenticated)
+            try
             {
-                int ident = Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
-                User? user = await _context.User.FirstOrDefaultAsync(x => x.Id == ident);
-
-                if (user != null)
+                if (User.Identity != null && User.Identity.IsAuthenticated)
                 {
-                    return View(user);
+                    int ident = Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
+                    User? user = await _context.User.FirstOrDefaultAsync(x => x.Id == ident);
+
+                    if (user != null)
+                    {
+                        return View(user);
+                    }
                 }
+                return RedirectToAction("Index", "Home");
             }
-            return RedirectToAction("Index", "Home");
+            catch (Exception ex)
+            {
+                TempData["Message"] = ex.Message;
+                return RedirectToAction("Error", "Home");
+            }
         }
 
         [HttpPost]
@@ -191,9 +235,10 @@ namespace Cotrust.Controllers
                 }
                 return View(user);
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                TempData["Message"] = ex.Message;
+                return RedirectToAction("Error", "Home");
             }
         }
 

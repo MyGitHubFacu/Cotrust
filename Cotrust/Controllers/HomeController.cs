@@ -28,33 +28,28 @@ namespace Cotrust.Controllers
 
         public async Task<IActionResult> Index(int? Id = 1)
         {
-            if (_context.Product != null)
-            {
+            try
+            {           
+                if (_context.Product == null) { return Problem("Entity set 'CotrustDbContext.Product'  is null."); }
+
                 await UploadCart();
 
-                try
+                switch (Id)
                 {
-                    switch (Id)
-                    {
-                        case 1: return View(await _context.Product.Where(x => x.Kind == Product.TypeOfProduct.PLC).ToListAsync());
-                        case 2: return View(await _context.Product.Where(x => x.Kind == Product.TypeOfProduct.Module).ToListAsync());
-                        case 3: return View(await _context.Product.Where(x => x.Kind == Product.TypeOfProduct.HMI).ToListAsync());
-                        case 4: return View(await _context.Product.Where(x => x.Kind == Product.TypeOfProduct.Servo).ToListAsync());
-                        case 5: return View(await _context.Product.Where(x => x.Kind == Product.TypeOfProduct.Driver).ToListAsync());
-                        case 6: return View(await _context.Product.Where(x => x.Kind == Product.TypeOfProduct.Software).ToListAsync());
-                        case 7: return View(await _context.Product.Where(x => x.Kind == Product.TypeOfProduct.Kits).ToListAsync());
-                        default: return View(await _context.Product.ToListAsync());
-                    }
-                }
-                catch (Exception ex)
-                {
-                    ViewData["Exception"] = ex.Message;
-                    return View(new List<Product>());
-                }
+                    case 1: return View(await _context.Product.Where(x => x.Kind == Product.TypeOfProduct.PLC).ToListAsync());
+                    case 2: return View(await _context.Product.Where(x => x.Kind == Product.TypeOfProduct.Module).ToListAsync());
+                    case 3: return View(await _context.Product.Where(x => x.Kind == Product.TypeOfProduct.HMI).ToListAsync());
+                    case 4: return View(await _context.Product.Where(x => x.Kind == Product.TypeOfProduct.Servo).ToListAsync());
+                    case 5: return View(await _context.Product.Where(x => x.Kind == Product.TypeOfProduct.Driver).ToListAsync());
+                    case 6: return View(await _context.Product.Where(x => x.Kind == Product.TypeOfProduct.Software).ToListAsync());
+                    case 7: return View(await _context.Product.Where(x => x.Kind == Product.TypeOfProduct.Kits).ToListAsync());
+                    default: return View(await _context.Product.ToListAsync());
+                }        
             }
-            else
+            catch (Exception ex)
             {
-                return Problem("Entity set 'CotrustDbContext.Product'  is null.");
+                TempData["Message"] = ex.Message;
+                return RedirectToAction("Error", "Home");
             }
         }
 
@@ -64,8 +59,16 @@ namespace Cotrust.Controllers
 
         public async Task<IActionResult> Help()
         {
-            await UploadCart();
-            return View();
+            try
+            {
+                await UploadCart();
+                return View();
+            }
+            catch (Exception ex)
+            {
+                TempData["Message"] = ex.Message;
+                return RedirectToAction("Error", "Home");
+            }
         }
 
         #endregion
@@ -74,8 +77,16 @@ namespace Cotrust.Controllers
 
         public async Task<IActionResult> About()
         {
-            await UploadCart();
-            return View();
+            try
+            {
+                await UploadCart();
+                return View();
+            }
+            catch (Exception ex)
+            {
+                TempData["Message"] = ex.Message;
+                return RedirectToAction("Error", "Home");
+            }
         }
 
         #endregion
@@ -84,8 +95,16 @@ namespace Cotrust.Controllers
 
         public async Task<IActionResult> Contact()
         {
-            await UploadCart();
-            return View();
+            try
+            {
+                await UploadCart();
+                return View();
+            }
+            catch (Exception ex)
+            {
+                TempData["Message"] = ex.Message;
+                return RedirectToAction("Error", "Home");
+            }
         }
 
         [HttpPost]
