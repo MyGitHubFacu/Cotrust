@@ -1,0 +1,58 @@
+﻿@model IEnumerable<Cotrust.Models.Package>
+
+@{
+    ViewData["Title"] = "Packages";
+}
+
+<div class="text-center mt-2">
+    <div class="card-title">Plantillas</div>
+</div>
+
+<div class="text-center">
+    <center>
+        <div class="card shadow mb-5 mt-2 w-100">
+            <div class="card-header py-3">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>
+                                Nombre
+                            </th>
+                            <th>
+                                Productos
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Name)
+                                </td>
+                                <td>
+                                    @item.Products?.Count()
+                                </td>
+                                <td>
+                                    <a class="btn btn-outline-success" asp-controller="Packages" asp-action="AddToCart" asp-route-id="@item.Id">
+                                        <i class="fas fa-plus-circle"></i>
+                                        Agregar al carrito
+                                    </a> |
+                                    <a class="btn btn-outline-primary" asp-controller="Packages" asp-action="Products" asp-route-id="@item.Id">
+                                        <i class="fas fa-info"></i>
+                                        Ver productos
+                                    </a> |
+                                    <a class="btn btn-outline-danger" asp-controller="Packages" asp-action="DeletePackage" asp-route-id="@item.Id">
+                                        <i class="fas fa-trash"></i>
+                                        Borrar
+                                    </a> 
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </center>
+</div>

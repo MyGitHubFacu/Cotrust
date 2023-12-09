@@ -1,0 +1,23 @@
+﻿@{
+    ViewData["Title"] = "Package";
+}
+
+<div class="text-center">
+    <center>
+        <div class="card shadow mb-5 mt-5 w-50">
+            <div class="card-header py-3">
+
+                <h2>Agregar plantilla</h2>
+
+                <form asp-action="AddPackage">
+                    <label class="mt-2">Nombre de la plantilla</label>
+                    <input name="name" type="text" class="form-control" required />
+
+                    <input type="submit" value="Agregar" class="btn btn-primary mb-1 mt-2" />
+                </form>
+
+                @ViewData["NameExist"]
+            </div>
+        </div>
+    </center>
+</div>
