@@ -18,30 +18,33 @@
     <div class="text-center">
         <nav class="navbar navbar-expand-lg navbar-light bg-dark bg-opacity-25">
             <div class="container px-4 px-lg-5">
-                <ul class="navbar-nav me-auto mb-5 mb-lg-auto ms-lg-auto">
-                    <!--Genero el menu de productos-->
-                    <li class="nav-item me-3" onmouseover="menumouseover('PLC')" onmouseout="menumouseout('PLC')">
-                        <a id="PLC" class="navbar-brand" asp-controller="Home" asp-action="Index" asp-route-id="1">PLC</a>
-                    </li>
-                    <li class="nav-item me-3" onmouseover="menumouseover('Module')" onmouseout="menumouseout('Module')">
-                        <a id="Module" class="navbar-brand" asp-controller="Home" asp-action="Index" asp-route-id="2">Module</a>
-                    </li>
-                    <li class="nav-item me-3" onmouseover="menumouseover('HMI')" onmouseout="menumouseout('HMI')">
-                        <a id="HMI" class="navbar-brand" asp-controller="Home" asp-action="Index" asp-route-id="3">HMI</a>
-                    </li>
-                    <li class="nav-item me-3" onmouseover="menumouseover('Servo')" onmouseout="menumouseout('Servo')">
-                        <a id="Servo" class="navbar-brand" asp-controller="Home" asp-action="Index" asp-route-id="4">Servo</a>
-                    </li>
-                    <li class="nav-item me-3" onmouseover="menumouseover('Driver')" onmouseout="menumouseout('Driver')">
-                        <a id="Driver" class="navbar-brand" asp-controller="Home" asp-action="Index" asp-route-id="5">Driver</a>
-                    </li> 
-                    <li class="nav-item me-3" onmouseover="menumouseover('Software')" onmouseout="menumouseout('Software')">
-                        <a id="Software" class="navbar-brand" asp-controller="Home" asp-action="Index" asp-route-id="6">Software</a>
-                    </li> 
-                    <li class="nav-item me-3" onmouseover="menumouseover('Kits')" onmouseout="menumouseout('Kits')">
-                        <a id="Kits" class="navbar-brand" asp-controller="Home" asp-action="Index" asp-route-id="7">Kits</a>
-                    </li>
-                </ul>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarProducts" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+                <div class="collapse navbar-collapse" id="navbarProducts">
+                    <ul class="navbar-nav me-auto mb-5 mb-lg-auto ms-lg-auto">
+                        <!--Genero el menu de productos-->
+                        <li class="nav-item me-3" onmouseover="menumouseover('PLC')" onmouseout="menumouseout('PLC')">
+                            <a id="PLC" class="navbar-brand" asp-controller="Home" asp-action="Index" asp-route-id="1">PLC</a>
+                        </li>
+                        <li class="nav-item me-3" onmouseover="menumouseover('Module')" onmouseout="menumouseout('Module')">
+                            <a id="Module" class="navbar-brand" asp-controller="Home" asp-action="Index" asp-route-id="2">Module</a>
+                        </li>
+                        <li class="nav-item me-3" onmouseover="menumouseover('HMI')" onmouseout="menumouseout('HMI')">
+                            <a id="HMI" class="navbar-brand" asp-controller="Home" asp-action="Index" asp-route-id="3">HMI</a>
+                        </li>
+                        <li class="nav-item me-3" onmouseover="menumouseover('Servo')" onmouseout="menumouseout('Servo')">
+                            <a id="Servo" class="navbar-brand" asp-controller="Home" asp-action="Index" asp-route-id="4">Servo</a>
+                        </li>
+                        <li class="nav-item me-3" onmouseover="menumouseover('Driver')" onmouseout="menumouseout('Driver')">
+                            <a id="Driver" class="navbar-brand" asp-controller="Home" asp-action="Index" asp-route-id="5">Driver</a>
+                        </li>
+                        <li class="nav-item me-3" onmouseover="menumouseover('Software')" onmouseout="menumouseout('Software')">
+                            <a id="Software" class="navbar-brand" asp-controller="Home" asp-action="Index" asp-route-id="6">Software</a>
+                        </li>
+                        <li class="nav-item me-3" onmouseover="menumouseover('Kits')" onmouseout="menumouseout('Kits')">
+                            <a id="Kits" class="navbar-brand" asp-controller="Home" asp-action="Index" asp-route-id="7">Kits</a>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </nav>
     </div>

@@ -52,55 +52,63 @@
                                 </li>
                             }                          
                         }
-                    </ul>
+                    </ul>                   
 
                     <div class="d-flex">
                         
-                        @if (Convert.ToInt32(ViewData["Products"]) > 0)
-                        {
-                            <a class="btn btn-outline-dark me-3" asp-controller="Cart" asp-action="Index">
-                                <i class="fas fa-fw fa-shopping-cart"></i>
-                                <span>@ViewData["Products"]</span>
-                            </a>
-                        }
-                        else
-                        {
-                            <a class="btn btn-outline-secondary me-3" asp-controller="Cart" asp-action="Index">
-                                <i class="fas fa-fw fa-shopping-cart"></i>
-                                <span>0</span>
-                            </a>
-                        }
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+                            @if (Convert.ToInt32(ViewData["Products"]) > 0)
+                            {
+                                <li>
+                                    <a class="btn btn-outline-dark me-3" asp-controller="Cart" asp-action="Index">
+                                        <i class="fas fa-fw fa-shopping-cart"></i>
+                                        <span>@ViewData["Products"]</span>
+                                    </a>
+                                </li>                                
+                            }
+                            else
+                            {
+                                <li>
+                                    <a class="btn btn-outline-secondary me-3" asp-controller="Cart" asp-action="Index">
+                                        <i class="fas fa-fw fa-shopping-cart"></i>
+                                        <span>0</span>
+                                    </a>
+                                </li>                              
+                            }
 
-
-
-                        @if (User.Identity != null && User.Identity.IsAuthenticated)
-                        {
-                            <div class="navbar-collapse">
-                                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                                    <li class="navbar-collapse dropdown">
-                                        <a class="navbar-collapse dropdown-toggle text-body text-decoration-none" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
-                                            <div class="text-black fw-semibold">@User.Identity.Name</div>
-                                            <i class="fas fa-fw fa-user"></i>
-                                        </a>
-                                        <ul class="dropdown-menu text-body" aria-labelledby="navbarDropdown">
-                                            <li><a class="dropdown-item text-body" asp-area="" asp-controller="User" asp-action="Account">Cuenta</a></li>
-                                            <li><a class="dropdown-item text-body" asp-area="" asp-controller="Buys" asp-action="Index">Compras</a></li>
-                                            <li><a class="dropdown-item text-body" asp-area="" asp-controller="Directions" asp-action="Index">Direcciones</a></li>
-                                            <li><a class="dropdown-item text-body" asp-area="" asp-controller="Packages" asp-action="Index">Plantillas</a></li>
-                                            <li><hr class="dropdown-divider" /></li>
-                                            <li><a class="dropdown-item text-body" asp-area="" asp-controller="User" asp-action="Logout">Cerrar sesión</a></li>
+                            @if (User.Identity != null && User.Identity.IsAuthenticated)
+                            {
+                                <li class="mt-auto mb-auto">
+                                    <div class="navbar-collapse">
+                                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                                            <li class="navbar-collapse dropdown">
+                                                <a class="input-group navbar-collapse dropdown-toggle text-body text-decoration-none" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
+                                                    <div class="text-black fw-semibold">@User.Identity.Name</div>
+                                                    <i class="fas fa-fw fa-user"></i>
+                                                </a>
+                                                <ul class="dropdown-menu text-body" aria-labelledby="navbarDropdown">
+                                                    <li><a class="dropdown-item text-body" asp-area="" asp-controller="User" asp-action="Account">Cuenta</a></li>
+                                                    <li><a class="dropdown-item text-body" asp-area="" asp-controller="Buys" asp-action="Index">Compras</a></li>
+                                                    <li><a class="dropdown-item text-body" asp-area="" asp-controller="Directions" asp-action="Index">Direcciones</a></li>
+                                                    <li><a class="dropdown-item text-body" asp-area="" asp-controller="Packages" asp-action="Index">Plantillas</a></li>
+                                                    <li><hr class="dropdown-divider" /></li>
+                                                    <li><a class="dropdown-item text-body" asp-area="" asp-controller="User" asp-action="Logout">Cerrar sesión</a></li>
+                                                </ul>
+                                            </li>
                                         </ul>
-                                    </li>
-                                </ul>
-                            </div>
-                        }
-                        else
-                        {
-                            <a class="navbar-collapse text-body text-decoration-none" asp-area="" asp-controller="User" asp-action="Login">
-                                <div class="text-black fw-semibold">Iniciar sesión</div>
-                                <i class="fas fa-fw fa-user"></i>
-                            </a>
-                        }
+                                    </div>
+                                </li>
+                            }
+                            else
+                            {
+                                <li class="mt-auto mb-auto">
+                                    <a class="input-group navbar-collapse text-body text-decoration-none" asp-area="" asp-controller="User" asp-action="Login">
+                                        <div class="text-black fw-semibold">Iniciar sesión</div>
+                                        <i class="fas fa-fw fa-user"></i>
+                                    </a>
+                                </li>
+                            }
+                        </ul>                      
                     </div>
                 </div>
             </div>
