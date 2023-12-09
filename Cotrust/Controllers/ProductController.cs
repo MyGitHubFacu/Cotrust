@@ -6,11 +6,9 @@ using System.Security.Claims;
 
 namespace Cotrust.Controllers
 {
-    public class ProductController : Controller
+    public class ProductController : BaseController
     {
         #region Context
-
-        private readonly CotrustDbContext _context;
 
         public ProductController(CotrustDbContext context)
         {
@@ -25,6 +23,8 @@ namespace Cotrust.Controllers
         {
             try
             {
+                await UploadCart();
+
                 if (id == null || _context.Product == null) { return NotFound(); }
                 var product = await _context.Product.FirstOrDefaultAsync(m => m.Id == id);
                 if (product == null) { return NotFound(); }
@@ -33,8 +33,7 @@ namespace Cotrust.Controllers
             }
             catch (Exception ex)
             {
-                TempData["Message"] = ex.Message;
-                return RedirectToAction("Error", "Home");
+                return await HandleError(ex.Message);
             }
         }
 

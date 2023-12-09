@@ -2,15 +2,14 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PayPalCheckoutSdk.Orders;
+using System.Diagnostics;
 using System.Security.Claims;
 
 namespace Cotrust.Controllers
 {
-    public class PackagesController : Controller
+    public class PackagesController : BaseController
     {
         #region Context
-
-        private readonly CotrustDbContext _context;
 
         public PackagesController(CotrustDbContext context)
         {
@@ -25,13 +24,14 @@ namespace Cotrust.Controllers
         {
             try
             {
+                await UploadCart();
+
                 if (User.Identity != null && User.Identity.IsAuthenticated)
                 {
                     int ident = Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
-                    User? user = await _context.User.Include(x => x.Products).FirstOrDefaultAsync(x => x.Id == ident);
+                    User? user = await _context.User.FirstOrDefaultAsync(x => x.Id == ident);
                     if (user != null)
                     {
-                        ViewData["Products"] = user.Products.Count;
                         return View(await _context.Package.Include(x => x.Products).Where(x => x.UserId == ident).ToListAsync());
                     }
                 }
@@ -39,8 +39,7 @@ namespace Cotrust.Controllers
             }
             catch (Exception ex)
             {
-                TempData["Message"] = ex.Message;
-                return RedirectToAction("Error", "Home");
+                return await HandleError(ex.Message);
             }
         }
 
@@ -52,13 +51,14 @@ namespace Cotrust.Controllers
         {
             try
             {
+                await UploadCart();
+
                 if (User.Identity != null && User.Identity.IsAuthenticated)
                 {
                     int ident = Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
-                    User? user = await _context.User.Include(x => x.Products).FirstOrDefaultAsync(x => x.Id == ident);
+                    User? user = await _context.User.FirstOrDefaultAsync(x => x.Id == ident);
                     if (user != null)
                     {
-                        ViewData["Products"] = user.Products.Count;
                         Package P = await _context.Package.FirstAsync(x => x.Id == id);
                         ViewData["PackageName"] = P.Name;
                         return View(await _context.PackageProducts.Where(x => x.PackageId == id).Include(x => x.Product).ToListAsync());
@@ -68,8 +68,7 @@ namespace Cotrust.Controllers
             }
             catch (Exception ex)
             {
-                TempData["Message"] = ex.Message;
-                return RedirectToAction("Error", "Home");
+                return await HandleError(ex.Message);
             }
         }
 
@@ -81,6 +80,8 @@ namespace Cotrust.Controllers
         {
             try
             {
+                await UploadCart();
+
                 if (User.Identity != null && User.Identity.IsAuthenticated)
                 {
                     int ident = Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
@@ -95,8 +96,7 @@ namespace Cotrust.Controllers
             }
             catch (Exception ex)
             {
-                TempData["Message"] = ex.Message;
-                return RedirectToAction("Error", "Home");
+                return await HandleError(ex.Message);
             }  
         }
 
@@ -104,6 +104,8 @@ namespace Cotrust.Controllers
         {
             try
             {
+                await UploadCart();
+
                 if (User.Identity != null && User.Identity.IsAuthenticated)
                 {
                     int ident = Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
@@ -144,8 +146,7 @@ namespace Cotrust.Controllers
             }
             catch (Exception ex)
             {
-                TempData["Message"] = ex.Message;
-                return RedirectToAction("Error", "Home");
+                return await HandleError(ex.Message);
             }
         }
 
@@ -171,8 +172,7 @@ namespace Cotrust.Controllers
             }
             catch (Exception ex)
             {
-                TempData["Message"] = ex.Message;
-                return RedirectToAction("Error", "Home");
+                return await HandleError(ex.Message);
             }
         }
 
@@ -211,8 +211,7 @@ namespace Cotrust.Controllers
             }
             catch (Exception ex)
             {
-                TempData["Message"] = ex.Message;
-                return RedirectToAction("Error", "Home");
+                return await HandleError(ex.Message);
             }
         }
 

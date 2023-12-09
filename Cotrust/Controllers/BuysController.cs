@@ -8,11 +8,9 @@ using System.Security.Claims;
 
 namespace Cotrust.Controllers
 {
-    public class BuysController : Controller
+    public class BuysController : BaseController
     {
         #region Context
-
-        private readonly CotrustDbContext _context;
 
         public BuysController(CotrustDbContext context)
         {
@@ -27,6 +25,8 @@ namespace Cotrust.Controllers
         {
             try
             {
+                await UploadCart();
+
                 if (User.Identity != null && User.Identity.IsAuthenticated)
                 {
                     int ident = Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
@@ -48,8 +48,7 @@ namespace Cotrust.Controllers
             }
             catch (Exception ex)
             {
-                TempData["Message"] = ex.Message;
-                return RedirectToAction("Error", "Home");
+                return await HandleError(ex.Message);
             }
         }
 
@@ -61,6 +60,8 @@ namespace Cotrust.Controllers
         {
             try
             {
+                await UploadCart();
+
                 if (User.Identity != null && User.Identity.IsAuthenticated)
                 {
                     int ident = Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
@@ -75,8 +76,7 @@ namespace Cotrust.Controllers
             }
             catch (Exception ex)
             {
-                TempData["Message"] = ex.Message;
-                return RedirectToAction("Error", "Home");
+                return await HandleError(ex.Message);
             }
         }
 
@@ -112,8 +112,7 @@ namespace Cotrust.Controllers
             }
             catch (Exception ex)
             {
-                TempData["Message"] = ex.Message;
-                return RedirectToAction("Error", "Home");
+                return await HandleError(ex.Message);
             }
         }
 
@@ -138,8 +137,7 @@ namespace Cotrust.Controllers
             }
             catch (Exception ex)
             {
-                TempData["Message"] = ex.Message;
-                return RedirectToAction("Error", "Home");
+                return await HandleError(ex.Message);
             }
         }
 
@@ -151,6 +149,8 @@ namespace Cotrust.Controllers
         {
             try
             {
+                await UploadCart();
+
                 if (User.Identity != null && User.Identity.IsAuthenticated)
                 {
                     int ident = Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
@@ -170,12 +170,11 @@ namespace Cotrust.Controllers
             }
             catch (Exception ex)
             {
-                TempData["Message"] = ex.Message;
-                return RedirectToAction("Error", "Home");
+                return await HandleError(ex.Message);
             }
         }
 
-        public IActionResult DirectionChoosed(int id)
+        public async Task<IActionResult> DirectionChoosed(int id)
         {
             try
             {
@@ -186,8 +185,7 @@ namespace Cotrust.Controllers
             }
             catch (Exception ex)
             {
-                TempData["Message"] = ex.Message;
-                return RedirectToAction("Error", "Home");
+                return await HandleError(ex.Message);
             }
         }
 
@@ -199,6 +197,8 @@ namespace Cotrust.Controllers
         {
             try
             {
+                await UploadCart();
+
                 if (User.Identity != null && User.Identity.IsAuthenticated)
                 {
                     int ident = Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
@@ -215,8 +215,7 @@ namespace Cotrust.Controllers
             }
             catch (Exception ex)
             {
-                TempData["Message"] = ex.Message;
-                return RedirectToAction("Error", "Home");
+                return await HandleError(ex.Message);
             }
         }
 
@@ -265,8 +264,7 @@ namespace Cotrust.Controllers
             }
             catch (Exception ex)
             {
-                TempData["Message"] = ex.Message;
-                return RedirectToAction("Error", "Home");
+                return await HandleError(ex.Message);
             }
         }
 

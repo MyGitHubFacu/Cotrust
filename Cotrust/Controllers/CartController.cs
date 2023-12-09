@@ -8,11 +8,9 @@ using System.Security.Claims;
 
 namespace Cotrust.Controllers
 {
-    public class CartController : Controller
+    public class CartController : BaseController
     {
         #region Context
-
-        private readonly CotrustDbContext _context;
 
         public CartController(CotrustDbContext context)
         {
@@ -37,10 +35,7 @@ namespace Cotrust.Controllers
                         ViewData["Products"] = lcp.Count();
 
                         double Total = 0;
-                        foreach (CartProduct cp in lcp)
-                        {
-                            Total += cp.Product.Price * cp.Quantity;
-                        }
+                        foreach (CartProduct cp in lcp) { Total += cp.Product.Price * cp.Quantity; }
 
                         ViewData["Total"] = Total;
 
@@ -51,8 +46,7 @@ namespace Cotrust.Controllers
             }
             catch (Exception ex)
             {
-                TempData["Message"] = ex.Message;
-                return RedirectToAction("Error", "Home");
+                return await HandleError(ex.Message);
             }
         }
 
@@ -103,8 +97,7 @@ namespace Cotrust.Controllers
             }
             catch (Exception ex)
             {
-                TempData["Message"] = ex.Message;
-                return RedirectToAction("Error", "Home");
+                return await HandleError(ex.Message);
             }
         }
 
@@ -126,8 +119,7 @@ namespace Cotrust.Controllers
             }
             catch (Exception ex)
             {
-                TempData["Message"] = ex.Message;
-                return RedirectToAction("Error", "Home");
+                return await HandleError(ex.Message);
             }
         }
 

@@ -10,12 +10,11 @@ using System.Security.Claims;
 
 namespace Cotrust.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
         #region Services
 
         private readonly IEmailSender _emailsender;
-        private readonly CotrustDbContext _context;
         public HomeController(CotrustDbContext context, IEmailSender emailSender)
         {
             _context = context;
@@ -29,7 +28,7 @@ namespace Cotrust.Controllers
         public async Task<IActionResult> Index(int? Id = 1)
         {
             try
-            {           
+            {
                 if (_context.Product == null) { return Problem("Entity set 'CotrustDbContext.Product'  is null."); }
 
                 await UploadCart();
@@ -44,12 +43,11 @@ namespace Cotrust.Controllers
                     case 6: return View(await _context.Product.Where(x => x.Kind == Product.TypeOfProduct.Software).ToListAsync());
                     case 7: return View(await _context.Product.Where(x => x.Kind == Product.TypeOfProduct.Kits).ToListAsync());
                     default: return View(await _context.Product.ToListAsync());
-                }        
+                }
             }
             catch (Exception ex)
             {
-                TempData["Message"] = ex.Message;
-                return RedirectToAction("Error", "Home");
+                return await HandleError(ex.Message);
             }
         }
 
@@ -66,8 +64,7 @@ namespace Cotrust.Controllers
             }
             catch (Exception ex)
             {
-                TempData["Message"] = ex.Message;
-                return RedirectToAction("Error", "Home");
+                return await HandleError(ex.Message);
             }
         }
 
@@ -84,8 +81,7 @@ namespace Cotrust.Controllers
             }
             catch (Exception ex)
             {
-                TempData["Message"] = ex.Message;
-                return RedirectToAction("Error", "Home");
+                return await HandleError(ex.Message);
             }
         }
 
@@ -102,8 +98,7 @@ namespace Cotrust.Controllers
             }
             catch (Exception ex)
             {
-                TempData["Message"] = ex.Message;
-                return RedirectToAction("Error", "Home");
+                return await HandleError(ex.Message);
             }
         }
 
@@ -120,26 +115,9 @@ namespace Cotrust.Controllers
 
         #region Others
 
-        public async Task<bool> UploadCart()
-        {
-            if (User.Identity != null && User.Identity.IsAuthenticated)
-            {
-                int ident = Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
-                User? user = await _context.User.Include(x => x.Products).FirstOrDefaultAsync(x => x.Id == ident);
-                if (user != null) { ViewData["Products"] = user.Products.Count(); }
-            }
-            return true;
-        }
-
         public IActionResult Privacy()
         {
             return View();
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
         #endregion

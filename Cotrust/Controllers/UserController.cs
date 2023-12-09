@@ -10,11 +10,9 @@ using System.Security.Claims;
 
 namespace Cotrust.Controllers
 {
-    public class UserController : Controller
+    public class UserController : BaseController
     {
         #region Context
-
-        private readonly CotrustDbContext _context;
 
         public UserController(CotrustDbContext context)
         {
@@ -26,7 +24,7 @@ namespace Cotrust.Controllers
         #region Login
 
         [AllowAnonymous]
-        public IActionResult Login()
+        public async Task<IActionResult> Login()
         {
             try
             {
@@ -38,8 +36,7 @@ namespace Cotrust.Controllers
             }
             catch (Exception ex)
             {
-                TempData["Message"] = ex.Message;
-                return RedirectToAction("Error", "Home");
+                return await HandleError(ex.Message);
             }
         }
 
@@ -70,8 +67,7 @@ namespace Cotrust.Controllers
             }   
             catch (Exception ex)
             {
-                TempData["Message"] = ex.Message;
-                return RedirectToAction("Error", "Home"); 
+                return await HandleError(ex.Message); ; 
             }
         }
 
@@ -80,7 +76,7 @@ namespace Cotrust.Controllers
         #region Register
 
         [AllowAnonymous]
-        public IActionResult Register()
+        public async Task<IActionResult> Register()
         {
             try
             {
@@ -88,8 +84,7 @@ namespace Cotrust.Controllers
             }
             catch (Exception ex)
             {
-                TempData["Message"] = ex.Message;
-                return RedirectToAction("Error", "Home");
+                return await HandleError(ex.Message);
             }         
         }
 
@@ -132,8 +127,7 @@ namespace Cotrust.Controllers
             }
             catch (Exception ex)
             {
-                TempData["Message"] = ex.Message;
-                return RedirectToAction("Error", "Home");
+                return await HandleError(ex.Message);
             }
         }
 
@@ -150,8 +144,7 @@ namespace Cotrust.Controllers
             }
             catch (Exception ex)
             {
-                TempData["Message"] = ex.Message;
-                return RedirectToAction("Error", "Home");
+                return await HandleError(ex.Message);
             }
         }
 
@@ -160,7 +153,7 @@ namespace Cotrust.Controllers
         #region AccessDenied
 
         [AllowAnonymous]
-        public IActionResult AccessDenied()
+        public async Task<IActionResult> AccessDenied()
         {
             try
             {
@@ -168,11 +161,8 @@ namespace Cotrust.Controllers
             }
             catch (Exception ex)
             {
-                TempData["Message"] = ex.Message;
-                return RedirectToAction("Error", "Home");
-            }
-
-            
+                return await HandleError(ex.Message);
+            }      
         }
 
         #endregion
@@ -183,6 +173,8 @@ namespace Cotrust.Controllers
         {
             try
             {
+                await UploadCart();
+
                 if (User.Identity != null && User.Identity.IsAuthenticated)
                 {
                     int ident = Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
@@ -197,8 +189,7 @@ namespace Cotrust.Controllers
             }
             catch (Exception ex)
             {
-                TempData["Message"] = ex.Message;
-                return RedirectToAction("Error", "Home");
+                return await HandleError(ex.Message);
             }
         }
 
@@ -237,8 +228,7 @@ namespace Cotrust.Controllers
             }
             catch (Exception ex)
             {
-                TempData["Message"] = ex.Message;
-                return RedirectToAction("Error", "Home");
+                return await HandleError(ex.Message);
             }
         }
 
