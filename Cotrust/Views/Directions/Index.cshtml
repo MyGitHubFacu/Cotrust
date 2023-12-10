@@ -9,10 +9,7 @@
 </div>
 
 <p>
-    <a class="btn btn-outline-primary" asp-action="Create" onmouseover="buttonmouseover('newaddress')" onmouseout="buttonmouseout('newaddress')">
-        <i class="fas fa-plus-circle"></i>
-        <span id="newaddress" class="visually-hidden">Crear nueva dirección</span>
-    </a>
+
 </p>
 
 <div class="text-center">
@@ -36,7 +33,12 @@
                         <th>
                             Código postal
                         </th>
-                        <th></th>
+                        <th>
+                            <a class="btn btn-outline-primary" asp-action="Create" onmouseover="buttonmouseover('newaddress')" onmouseout="buttonmouseout('newaddress')">
+                                <i class="fas fa-plus-circle"></i>
+                                <span id="newaddress" class="visually-hidden">Agregar</span>
+                            </a>
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
