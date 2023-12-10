@@ -22,11 +22,11 @@ function menumouseout(id) {
 /*DINAMICA DEL MENU DEL LAYOUT*/
 function layoutmouseover(id) {
     item = document.getElementById(id)
-    item.className = "nav-link active fw-bold"
+    item.className = "nav-link text-center active fs-3"
 }
 function layoutmouseout(id) {
     item = document.getElementById(id)
-    item.className = "nav-link active"
+    item.className = "nav-link text-center active fs-4"
 }
 
 /*DINAMICA DEL BOTONES CON ICONOS*/

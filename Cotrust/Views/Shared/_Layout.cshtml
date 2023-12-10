@@ -17,21 +17,22 @@
         <nav class="navbar navbar-expand-lg navbar-light bg-dark bg-opacity-10">
             <div class="container px-4 px-lg-5">
                 <img height="40" src="~/img/Future.png" alt="..." />
-                <a class="navbar-brand px-3" asp-area="" asp-controller="Home" asp-action="Index">Co-trust</a>
+                <a class="navbar-brand px-3 fw-semibold fs-4" asp-area="" asp-controller="Home" asp-action="Index">Co-trust</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
                         <li class="nav-item" onmouseover="layoutmouseover('index')" onmouseout="layoutmouseout('index')">
-                            <a id="index" class="nav-link active" asp-area="" asp-controller="Home" asp-action="Index">Inicio</a>
+                            <a id="index" class="nav-link text-center active fs-4" asp-area="" asp-controller="Home" asp-action="Index"><i class="fas fa-solid fa-home" style="width:40px;color:#3399FF"></i></a>
                         </li>
                         <li class="nav-item" onmouseover="layoutmouseover('about')" onmouseout="layoutmouseout('about')">
-                            <a id="about" class="nav-link active" asp-area="" asp-controller="Home" asp-action="About">Nosotros</a>
+                            <a id="about" class="nav-link text-center active fs-4" asp-area="" asp-controller="Home" asp-action="About"><i class="fas fa-solid fa-info" style="width:40px"></i></a>
                         </li>
+                       
                         <li class="nav-item" onmouseover="layoutmouseover('contact')" onmouseout="layoutmouseout('contact')">
-                            <a id="contact" class="nav-link active" asp-area="" asp-controller="Home" asp-action="Contact">Contactos</a>
+                            <a id="contact" class="nav-link text-center active fs-4" asp-area="" asp-controller="Home" asp-action="Contact"><i class="fas fa-solid fa-envelope" style="width:40px"></i></a>
                         </li>
                         <li class="nav-item" onmouseover="layoutmouseover('help')" onmouseout="layoutmouseout('help')">
-                            <a id="help" class="nav-link active" asp-area="" asp-controller="Home" asp-action="Help">Ayuda</a>
+                            <a id="help" class="nav-link text-center active fs-4" asp-area="" asp-controller="Home" asp-action="Help"><i class="fas fa-solid fa-question" style="width:40px"></i></a>
                         </li>
 
                         @if (User.Identity != null && User.Identity.IsAuthenticated)
@@ -40,7 +41,7 @@
                             if (User.FindFirst(System.Security.Claims.ClaimTypes.Role)?.Value == Cotrust.Models.User.TypeOfUser.Staff.ToString() | User.FindFirst(System.Security.Claims.ClaimTypes.Role)?.Value == Cotrust.Models.User.TypeOfUser.Admin.ToString())
                             {
                                 <li class="nav-item" onmouseover="layoutmouseover('products')" onmouseout="layoutmouseout('products')">
-                                    <a id="products" class="nav-link active" asp-area="" asp-controller="Products" asp-action="Index">Productos</a>
+                                    <a id="products" class="nav-link text-center active fs-4" asp-area="" asp-controller="Products" asp-action="Index">Productos</a>
                                 </li>
                             }
 
@@ -48,19 +49,18 @@
                             if (User.FindFirst(System.Security.Claims.ClaimTypes.Role)?.Value == Cotrust.Models.User.TypeOfUser.Admin.ToString())
                             {                               
                                 <li class="nav-item" onmouseover="layoutmouseover('usuarios')" onmouseout="layoutmouseout('usuarios')">
-                                    <a id="usuarios" class="nav-link active" asp-area="" asp-controller="Users" asp-action="Index">Usuarios</a>
+                                    <a id="usuarios" class="nav-link text-center active fs-4" asp-area="" asp-controller="Users" asp-action="Index">Usuarios</a>
                                 </li>
                             }                          
                         }
                     </ul>                   
 
-                    <div class="d-flex">
-                        
+                    <div class="text-center">              
                         <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
                             @if (Convert.ToInt32(ViewData["Products"]) > 0)
                             {
-                                <li>
-                                    <a class="btn btn-outline-dark me-3" asp-controller="Cart" asp-action="Index">
+                                <li class="text-center">
+                                    <a class="btn btn-outline-dark" asp-controller="Cart" asp-action="Index">
                                         <i class="fas fa-fw fa-shopping-cart"></i>
                                         <span>@ViewData["Products"]</span>
                                     </a>
@@ -68,8 +68,8 @@
                             }
                             else
                             {
-                                <li>
-                                    <a class="btn btn-outline-secondary me-3" asp-controller="Cart" asp-action="Index">
+                                <li class="text-center">
+                                    <a class="btn btn-outline-secondary " asp-controller="Cart" asp-action="Index">
                                         <i class="fas fa-fw fa-shopping-cart"></i>
                                         <span>0</span>
                                     </a>
@@ -78,7 +78,7 @@
 
                             @if (User.Identity != null && User.Identity.IsAuthenticated)
                             {
-                                <li class="mt-auto mb-auto">
+                                <li class="mt-auto mb-auto ms-3">
                                     <div class="navbar-collapse">
                                         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                                             <li class="navbar-collapse dropdown">
@@ -101,8 +101,8 @@
                             }
                             else
                             {
-                                <li class="mt-auto mb-auto">
-                                    <a class="input-group navbar-collapse text-body text-decoration-none" asp-area="" asp-controller="User" asp-action="Login">
+                                <li class="mt-auto mb-auto ms-3">
+                                    <a class="input-group navbar-collapse text-center text-body text-decoration-none" asp-area="" asp-controller="User" asp-action="Login">
                                         <div class="text-black fw-semibold">Iniciar sesión</div>
                                         <i class="fas fa-fw fa-user"></i>
                                     </a>
