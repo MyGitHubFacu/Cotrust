@@ -9,9 +9,9 @@
 </div>
 
 <p>
-    <a class="btn btn-outline-primary" asp-action="Create">
+    <a class="btn btn-outline-primary" asp-action="Create" onmouseover="buttonmouseover('newaddress')" onmouseout="buttonmouseout('newaddress')">
         <i class="fas fa-plus-circle"></i>
-        Crear nueva dirección
+        <span id="newaddress" class="visually-hidden">Crear nueva dirección</span>
     </a>
 </p>
 
@@ -59,17 +59,14 @@
                                 @Html.DisplayFor(modelItem => item.PostalCode)
                             </td>
                             <td>
-                                <a class="btn btn-outline-success" asp-action="Edit" asp-route-id="@item.Id">
+                                <a class="btn btn-outline-success me-1" style="width:50px" asp-action="Edit" asp-route-id="@item.Id">
                                     <i class="fas fa-edit"></i>
-                                    Editar
-                                </a> |
-                                <a class="btn btn-outline-primary" asp-action="Details" asp-route-id="@item.Id">
+                                </a>
+                                <a class="btn btn-outline-primary me-1 ms-1" style="width:50px" asp-action="Details" asp-route-id="@item.Id">
                                     <i class="fas fa-info"></i>
-                                    Detalles
-                                </a> |
-                                <a class="btn btn-outline-danger" asp-action="Delete" asp-route-id="@item.Id">
+                                </a>
+                                <a class="btn btn-outline-danger ms-1" style="width:50px" asp-action="Delete" asp-route-id="@item.Id">
                                     <i class="fas fa-trash"></i>
-                                    Borrar
                                 </a>
                             </td>
                         </tr>

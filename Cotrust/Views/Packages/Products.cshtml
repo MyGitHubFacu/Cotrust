@@ -54,13 +54,13 @@
                 </table>
 
                 <div class="d-flex">
-                    <a class="btn btn-outline-primary me-auto" asp-controller="Packages" asp-action="Index">
+                    <a class="btn btn-outline-primary me-auto" asp-controller="Packages" asp-action="Index" onmouseover="buttonmouseover('goback')" onmouseout="buttonmouseout('goback')">
                         <i class="fas fa-solid fa-arrow-left"></i>
-                        Volver
+                        <span id="goback" class="visually-hidden">Volver</span>
                     </a>
-                    <a class="btn btn-outline-success" asp-controller="Packages" asp-action="AddToCart" asp-route-id="@Model.First().PackageId">
+                    <a class="btn btn-outline-success" asp-controller="Packages" asp-action="AddToCart" asp-route-id="@Model.First().PackageId" onmouseover="buttonmouseover('addtocart')" onmouseout="buttonmouseout('addtocart')">
                         <i class="fas fa-plus-circle"></i>
-                        Agregar al carrito
+                        <span id="addtocart" class="visually-hidden">Agregar al carrito</span>                    
                     </a>
                 </div>
             </div>

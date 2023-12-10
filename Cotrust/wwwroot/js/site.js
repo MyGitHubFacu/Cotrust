@@ -28,3 +28,15 @@ function layoutmouseout(id) {
     item = document.getElementById(id)
     item.className = "nav-link active"
 }
+
+/*DINAMICA DEL BOTONES CON ICONOS*/
+
+function buttonmouseover(id) {
+    item = document.getElementById(id)
+    item.className = ""
+}
+
+function buttonmouseout(id) {
+    item = document.getElementById(id)
+    item.className = "visually-hidden"
+}

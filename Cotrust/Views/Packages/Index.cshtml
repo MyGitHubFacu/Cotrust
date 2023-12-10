@@ -35,17 +35,14 @@
                                     @item.Products?.Count()
                                 </td>
                                 <td>
-                                    <a class="btn btn-outline-success" asp-controller="Packages" asp-action="AddToCart" asp-route-id="@item.Id">
+                                    <a class="btn btn-outline-success me-1" style="width:50px" asp-controller="Packages" asp-action="AddToCart" asp-route-id="@item.Id">
                                         <i class="fas fa-plus-circle"></i>
-                                        Agregar al carrito
-                                    </a> |
-                                    <a class="btn btn-outline-primary" asp-controller="Packages" asp-action="Products" asp-route-id="@item.Id">
+                                    </a>
+                                    <a class="btn btn-outline-primary me-1 ms-1" style="width:50px" asp-controller="Packages" asp-action="Products" asp-route-id="@item.Id">
                                         <i class="fas fa-info"></i>
-                                        Ver productos
-                                    </a> |
-                                    <a class="btn btn-outline-danger" asp-controller="Packages" asp-action="DeletePackage" asp-route-id="@item.Id">
+                                    </a>
+                                    <a class="btn btn-outline-danger ms-1" style="width:50px" asp-controller="Packages" asp-action="DeletePackage" asp-route-id="@item.Id">
                                         <i class="fas fa-trash"></i>
-                                        Borrar
                                     </a> 
                                 </td>
                             </tr>

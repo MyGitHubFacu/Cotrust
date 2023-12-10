@@ -46,17 +46,14 @@
                                 $ @(item.Quantity * item.Product.Price)
                             </td>
                             <td>
-                                <a class="btn btn-outline-success" asp-controller="Buys" asp-action="BuyProduct" asp-route-id="@item.Id">
+                                <a class="btn btn-outline-success me-1" style="width:50px" asp-controller="Buys" asp-action="BuyProduct" asp-route-id="@item.Id">
                                     <i class="fas fa-credit-card"></i>
-                                    Comprar
-                                </a> |
-                                <a class="btn btn-outline-primary" asp-controller="Product" asp-action="Index" asp-route-id="@item.ProductId">
+                                </a> 
+                                <a class="btn btn-outline-primary me-1 ms-1" style="width:50px" asp-controller="Product" asp-action="Index" asp-route-id="@item.ProductId">
                                     <i class="fas fa-info"></i>
-                                    Ver producto
-                                </a> |                           
-                                <a class="btn btn-outline-danger" asp-action="DeleteProduct" asp-route-id="@item.Id">
+                                </a> 
+                                <a class="btn btn-outline-danger ms-1" style="width:50px" asp-action="DeleteProduct" asp-route-id="@item.Id">
                                     <i class="fas fa-trash"></i>
-                                    Borrar
                                 </a> 
                             </td>
                         </tr>
@@ -75,13 +72,13 @@
             </table>
 
             <div class="d-flex">
-                <a class="btn btn-outline-primary me-auto" asp-controller="Packages" asp-action="PackageName">
+                <a class="btn btn-outline-primary me-auto" asp-controller="Packages" asp-action="PackageName" onmouseover="buttonmouseover('addastemplate')" onmouseout="buttonmouseout('addastemplate')">
                     <i class="fas fa-plus-circle"></i>
-                    Agregar como plantilla
+                    <span id="addastemplate" class="visually-hidden">Agregar como plantilla</span>          
                 </a>
-                <a class="btn btn-success" asp-controller="Buys" asp-action="BuyAll">
-                    <i class="fas fa-credit-card me-1"></i>
-                    Comprar todo
+                <a class="btn btn-success" asp-controller="Buys" asp-action="BuyAll" onmouseover="buttonmouseover('buyall')" onmouseout="buttonmouseout('buyall')">
+                    <i class="fas fa-credit-card"></i>
+                    <span id="buyall" class="visually-hidden">Comprar todo</span>                
                 </a>
             </div>
         </div>

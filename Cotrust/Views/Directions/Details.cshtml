@@ -34,13 +34,13 @@
                 </div>
             </div>
             <div class="mt-2">
-                <a class="btn btn-outline-primary me-1" asp-action="Edit" asp-route-id="@Model?.Id">
+                <a class="btn btn-outline-primary me-1" asp-action="Edit" asp-route-id="@Model?.Id" onmouseover="buttonmouseover('edit')" onmouseout="buttonmouseout('edit')">
                     <i class="fas fa-edit"></i>
-                    Edit
+                    <span id="edit" class="visually-hidden">Editar</span>                
                 </a> |
-                <a class="btn btn-outline-primary" asp-action="Index">
+                <a class="btn btn-outline-primary ms-1" asp-action="Index" onmouseover="buttonmouseover('goback')" onmouseout="buttonmouseout('goback')">
                     <i class="fas fa-solid fa-arrow-left"></i>
-                    Volver
+                    <span id="goback" class="visually-hidden">Volver</span>
                 </a>
             </div>
         </div>

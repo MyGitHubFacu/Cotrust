@@ -62,22 +62,20 @@
                                 <img class="card-img-top" src="data:image/jpg; base64, @Item.Image" alt="..." />
                                 <!-- Product details-->
                                 <div class="card-body p-3">
-                                    <div class="text-center">
-                                        <!-- Product name-->
-                                        <h5 class="card-text mb-2 fs-4 fw-bold">@Item.Name</h5>
-                                        <div class="input-group mt-3">
-                                            <!-- Product price-->
-                                            <div class="product-price me-auto">$@Item.Price</div>
-                                            @if (Item.Stock > 0)
-                                            {
-                                                <div class="product-stock">DISPONIBLES: @Item.Stock</div>
-                                            }
-                                            else
-                                            {
-                                                <div class="product-stock text-decoration-line-through">AGOTADO</div>
-                                            }
-                                        </div>
+                                    <div class="input-group">
+                                        <!-- Product price-->
+                                        <div class="card-text fs-4 fw-bold">$@Item.Price</div>                                       
                                     </div>
+                                    
+                                    <div class="input-group">
+                                        <!-- Product name-->
+                                        <div class="card-text fs-6 fw-semibold ">@Item.Name</div>
+                                        <div class="card-text me-1 ms-1">|</div>
+                                        @if (Item.Stock > 0) 
+                                        { <div class="card-text fs-6 ">Disponibles: @Item.Stock</div> }
+                                        else 
+                                        { <div class="card-text fs-6 text-decoration-line-through">Agotado</div> }
+                                    </div>                                   
                                 </div>
                             </a>                          
                         </div>

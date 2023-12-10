@@ -37,13 +37,13 @@
 
                 <form asp-action="Delete">
                     <input type="hidden" asp-for="Id" />
-                    <button type ="submit" class="btn btn-outline-danger">
+                    <button type="submit" class="btn btn-outline-danger" onmouseover="buttonmouseover('delete')" onmouseout="buttonmouseout('delete')">
                         <i class="fas fa-trash"></i>
-                        Borrar
+                        <span id="delete" class="visually-hidden">Eliminar</span>
                     </button> |
-                    <a asp-action="Index" class="btn btn-outline-primary">
+                    <a asp-action="Index" class="btn btn-outline-primary" onmouseover="buttonmouseover('goback')" onmouseout="buttonmouseout('goback')">
                         <i class="fas fa-solid fa-arrow-left"></i>
-                        Volver
+                        <span id="goback" class="visually-hidden">Volver</span>
                     </a>
                 </form>
             </div>

@@ -45,9 +45,9 @@
 </center>
 
 <div>
-    <a class="btn btn-outline-primary" asp-action="Index">
+    <a asp-action="Index" class="btn btn-outline-primary" onmouseover="buttonmouseover('goback')" onmouseout="buttonmouseout('goback')">
         <i class="fas fa-solid fa-arrow-left"></i>
-        Volver
+        <span id="goback" class="visually-hidden">Volver</span>
     </a>
 </div>
 
