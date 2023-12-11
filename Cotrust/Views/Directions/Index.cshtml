@@ -8,11 +8,17 @@
     <div class="card-title">Direcciones</div>
 </div>
 
+
 <center>
+    <a class="btn btn-outline-primary" asp-action="Create" onmouseover="buttonmouseover('newaddress')" onmouseout="buttonmouseout('newaddress')">
+        <i class="fas fa-plus-circle"></i>
+        <span id="newaddress" class="visually-hidden">Agregar</span>
+    </a>
+
     @foreach (var Item in Model)
     {        
         <div class="card shadow mb-2 mt-2" style="width:600px">
-            <div class="card-body">
+            <div class="card-body border-bottom border-primary border-2">
                 <h5 class="card-text fw-semibold">@Item.Address, @Item.City, @Item.Region, @Item.Country - @Item.PostalCode</h5>
 
                 <div class="input-group mt-1">
@@ -29,11 +35,6 @@
             </div>
         </div>      
     }
-
-    <a class="btn btn-outline-primary" asp-action="Create" onmouseover="buttonmouseover('newaddress')" onmouseout="buttonmouseout('newaddress')">
-        <i class="fas fa-plus-circle"></i>
-        <span id="newaddress" class="visually-hidden">Agregar</span>
-    </a>
 </center>
 
 
