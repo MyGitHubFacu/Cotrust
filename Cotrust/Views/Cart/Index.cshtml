@@ -19,10 +19,15 @@
                         <img class="card-img ms-0 me-auto" src="data:image/jpg; base64, @Item.Product.Image" alt="..." style="height:100px;width:auto" />
                         <div class="container">
                             <div class="input-group mt-1">
-                                <h5 class="card-text me-auto">@Item.Product.Name x @Item.Quantity x $@Item.Product.Price c/u</h5>
+                                <h5 class="card-text me-auto">@Item.Product.Name</h5>
                                 <h4 class="card-text fw-bold">$ @(Item.Quantity * Item.Product.Price)</h4>
                             </div>
-                            <div class="input-group mt-4">
+
+                            <div class="input-group">
+                                <h6 class="card-text me-auto">@Item.Quantity x $@Item.Product.Price c/u</h6>
+                            </div>
+
+                            <div class="input-group mt-2">
                                 <a class="btn btn-outline-success me-1" style="width:50px" asp-controller="Buys" asp-action="BuyProduct" asp-route-id="@Item.Id">
                                     <i class="fas fa-credit-card"></i>
                                 </a>
