@@ -37,10 +37,6 @@
                 <a class="btn btn-outline-primary me-1" asp-action="Edit" asp-route-id="@Model?.Id" onmouseover="buttonmouseover('edit')" onmouseout="buttonmouseout('edit')">
                     <i class="fas fa-edit"></i>
                     <span id="edit" class="visually-hidden">Editar</span>                
-                </a> |
-                <a class="btn btn-outline-primary ms-1" asp-action="Index" onmouseover="buttonmouseover('goback')" onmouseout="buttonmouseout('goback')">
-                    <i class="fas fa-solid fa-arrow-left"></i>
-                    <span id="goback" class="visually-hidden">Volver</span>
                 </a>
             </div>
         </div>
@@ -48,4 +44,7 @@
 </center>
 
 
-
+<a asp-action="Index" class="btn btn-outline-primary" onmouseover="buttonmouseover('goback')" onmouseout="buttonmouseout('goback')">
+    <i class="fas fa-solid fa-arrow-left"></i>
+    <span id="goback" class="visually-hidden">Volver</span>
+</a>

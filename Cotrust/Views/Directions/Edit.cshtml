@@ -45,12 +45,10 @@
     </div>
 </center>
 
-<div>
-    <a asp-action="Index" class="btn btn-outline-primary" onmouseover="buttonmouseover('goback')" onmouseout="buttonmouseout('goback')">
-        <i class="fas fa-solid fa-arrow-left"></i>
-        <span id="goback" class="visually-hidden">Volver</span>
-    </a>
-</div>
+<a asp-action="Index" class="btn btn-outline-primary" onmouseover="buttonmouseover('goback')" onmouseout="buttonmouseout('goback')">
+    <i class="fas fa-solid fa-arrow-left"></i>
+    <span id="goback" class="visually-hidden">Volver</span>
+</a>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
