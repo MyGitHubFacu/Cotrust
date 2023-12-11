@@ -219,7 +219,6 @@ namespace Cotrust.Controllers
             }
         }
 
-        [HttpPost]
         public async Task<IActionResult> BuyNow()
         {
             try
