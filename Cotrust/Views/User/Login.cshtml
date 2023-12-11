@@ -9,14 +9,14 @@
 
 <div class="text-center">
     <center>
-        <div class="card shadow mb-5 mt-2 w-50">
+        <div class="card shadow mb-5 mt-2" style="width:500px">
             <div class="card-header py-3">
                 <form asp-action="Login">
-                    <label class="mt-2">E-mail</label>
-                    <input name="email" type="email" class="form-control" required />
+                    @*<label class="mt-2">E-mail</label>*@
+                    <input class="form-control mt-2" name="email" placeholder="E-mail" type="email" required />
 
-                    <label class="mt-2">Contraseña</label>
-                    <input name="password" type="password" class="form-control mb-2" required />
+                    @*<label class="mt-2">Contraseña</label>*@
+                    <input class="form-control mt-3 mb-2" name="password" placeholder="Contraseña" type="password" required />
 
                     <input type="submit" value="Ingresar" class="btn btn-primary mb-1 mt-2" />
                 </form>
