@@ -40,3 +40,26 @@ function buttonmouseout(id) {
     item = document.getElementById(id)
     item.className = "visually-hidden"
 }
+
+
+/*GALERIA DE IMAGENES*/
+let slideIndex = 1;
+
+function changeimage(num) {
+    if (num > 3) { num = 1; }
+    if (num < 1) { num = 3; }
+    document.getElementById('c1').className = "carousel-item";
+    document.getElementById('c2').className = "carousel-item";
+    document.getElementById('c3').className = "carousel-item";
+
+    document.getElementById('c' + num).className = "carousel-item active";
+    slideIndex = num;
+}
+
+function nextimage() {
+    changeimage(slideIndex + 1);
+}
+
+function previmage() {
+    changeimage(slideIndex - 1);
+}

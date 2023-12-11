@@ -3,11 +3,35 @@
 }
 
 <div class="container">
-
     <center>
-        <img height="400" src="~/img/Future.png" alt="..." />
+        <div class="carousel slide w-100" data-ride="carousel">          
+            <div class="carousel-inner">
+                <div id="c1" class="carousel-item active">
+                    <img class="d-block w-75" src="~/img/banner1.jpg" alt="..." />               
+                </div>
+                <div id="c2" class="carousel-item">
+                    <img class="d-block w-75" src="~/img/333.jpg" alt="..." />                   
+                </div>
+                <div id="c3" class="carousel-item">
+                    <img class="d-block w-75" src="~/img/Future.png" alt="..." />
+                </div>
+            </div>
+
+            <a class="carousel-control-prev text-decoration-none" role="button" data-slide="prev" onclick="previmage()">
+                <i class="fas fa-angle-double-left fs-1"></i>
+            </a>
+            <a class="carousel-control-next text-decoration-none" role="button" data-slide="next" onclick="nextimage()">
+                <i class="fas fa-angle-double-right fs-1"></i>
+            </a>
+        </div>
+        
+        <div class="text-center mt-2">
+            <span class="dot" onclick="changeimage(1)"></span>
+            <span class="dot" onclick="changeimage(2)"></span>
+            <span class="dot" onclick="changeimage(3)"></span>
+        </div>
     </center>
-    
+
     <div class="about-heading-content">
         <div class="row">                     
             <div class="col-xl-9 col-lg-10 mx-auto">
