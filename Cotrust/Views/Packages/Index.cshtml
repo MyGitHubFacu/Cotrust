@@ -10,46 +10,31 @@
 
 <div class="text-center">
     <center>
-        <div class="card shadow mb-5 mt-2 w-100">
-            <div class="card-header py-3">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>
-                                Nombre
-                            </th>
-                            <th>
-                                Productos
-                            </th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var item in Model)
-                        {
-                            <tr>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Name)
-                                </td>
-                                <td>
-                                    @item.Products?.Count()
-                                </td>
-                                <td>
-                                    <a class="btn btn-outline-success me-1" style="width:50px" asp-controller="Packages" asp-action="AddToCart" asp-route-id="@item.Id">
-                                        <i class="fas fa-plus-circle"></i>
-                                    </a>
-                                    <a class="btn btn-outline-primary me-1 ms-1" style="width:50px" asp-controller="Packages" asp-action="Products" asp-route-id="@item.Id">
-                                        <i class="fas fa-info"></i>
-                                    </a>
-                                    <a class="btn btn-outline-danger ms-1" style="width:50px" asp-controller="Packages" asp-action="DeletePackage" asp-route-id="@item.Id">
-                                        <i class="fas fa-trash"></i>
-                                    </a> 
-                                </td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
+        @foreach (var Item in Model)
+        {
+            <div class="card shadow mb-2 mt-2" style="width:500px">
+                <div class="card-body border-bottom border-primary border-2">
+
+                    <div class="input-group ">
+                        <h5 class="card-text fw-semibold me-auto">@Item.Name</h5>
+                        <h5>
+                            <a asp-controller="Packages" asp-action="Products" asp-route-id="@Item.Id">
+                                Productos: @Item.Products?.Count
+                            </a>
+                        </h5>                       
+                    </div>
+                    
+
+                    <div class="input-group mt-1">
+                        <a class="btn btn-outline-success me-1" style="width:50px" asp-controller="Packages" asp-action="AddToCart" asp-route-id="@Item.Id">
+                            <i class="fas fa-plus-circle"></i>
+                        </a>
+                        <a class="btn btn-outline-danger ms-1" style="width:50px" asp-controller="Packages" asp-action="DeletePackage" asp-route-id="@Item.Id">
+                            <i class="fas fa-trash"></i>
+                        </a>
+                    </div>
+                </div>
             </div>
-        </div>
+        }
     </center>
 </div>

@@ -8,79 +8,55 @@
     <div class="card-title">Carrito</div>
 </div>
 
-<div class="text-center">       
-    <div class="card shadow mb-5 mt-2 w-100">
-        <div class="card-header py-3">
-            <table class="table mt-2">
-                <thead>
-                    <tr>
-                        <th>
-                            Producto
-                        </th>
-                        <th>
-                            Cantidad
-                        </th>
-                        <th>
-                            Precio
-                        </th>
-                        <th>
-                            Total
-                        </th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in Model)
-                    {
-                        <tr>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Product.Name)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Quantity)
-                            </td>
-                            <td>
-                                $ @Html.DisplayFor(modelItem => item.Product.Price)
-                            </td>
-                            <td>
-                                $ @(item.Quantity * item.Product.Price)
-                            </td>
-                            <td>
-                                <a class="btn btn-outline-success me-1" style="width:50px" asp-controller="Buys" asp-action="BuyProduct" asp-route-id="@item.Id">
+<div class="text-center">     
+    <center>
+        @foreach (var Item in Model)
+        {
+            <div class="card shadow mb-2 mt-2" style="width:600px">
+                <div class="card-body border-bottom border-primary border-2">
+                    <div class="d-flex">
+                        <!-- Product image-->
+                        <img class="card-img ms-0 me-auto" src="data:image/jpg; base64, @Item.Product.Image" alt="..." style="height:100px;width:auto" />
+                        <div class="container">
+                            <div class="input-group mt-1">
+                                <h5 class="card-text me-auto">@Item.Product.Name x @Item.Quantity x $@Item.Product.Price c/u</h5>
+                                <h4 class="card-text fw-bold">$ @(Item.Quantity * Item.Product.Price)</h4>
+                            </div>
+                            <div class="input-group mt-4">
+                                <a class="btn btn-outline-success me-1" style="width:50px" asp-controller="Buys" asp-action="BuyProduct" asp-route-id="@Item.Id">
                                     <i class="fas fa-credit-card"></i>
-                                </a> 
-                                <a class="btn btn-outline-primary me-1 ms-1" style="width:50px" asp-controller="Product" asp-action="Index" asp-route-id="@item.ProductId">
+                                </a>
+                                <a class="btn btn-outline-primary ms-1 me-1" style="width:50px" asp-controller="Product" asp-action="Index" asp-route-id="@Item.ProductId">
                                     <i class="fas fa-info"></i>
-                                </a> 
-                                <a class="btn btn-outline-danger ms-1" style="width:50px" asp-action="DeleteProduct" asp-route-id="@item.Id">
+                                </a>
+                                <a class="btn btn-outline-danger ms-1 me-auto" style="width:50px" asp-action="DeleteProduct" asp-route-id="@Item.Id">
                                     <i class="fas fa-trash"></i>
-                                </a> 
-                            </td>
-                        </tr>
-                    }
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
 
-                    <tr class="bg-secondary bg-opacity-10">
-                        <td><div class="fw-semibold">Precio final:</div></td>
-                        <td></td>                           
-                        <td></td>
-                        <td>
-                            <div class="fw-semibold">$ @ViewData["Total"]</div>
-                        </td>
-                        <td></td>
-                    </tr>
-                </tbody>
-            </table>
+        <div class="card shadow mb-2 mt-2" style="width:600px">
+            <div class="card-body">
+                <div class="input-group bg-secondary bg-opacity-10">
+                    <h4 class="fw-semibold ms-auto me-2">Total:</h4>
+                    <h4 class="fw-semibold me-auto">$ @ViewData["Total"]</h4>
+                </div>
 
-            <div class="d-flex">
-                <a class="btn btn-outline-primary me-auto" asp-controller="Packages" asp-action="PackageName" onmouseover="buttonmouseover('addastemplate')" onmouseout="buttonmouseout('addastemplate')">
-                    <i class="fas fa-plus-circle"></i>
-                    <span id="addastemplate" class="visually-hidden">Agregar como plantilla</span>          
-                </a>
-                <a class="btn btn-success" asp-controller="Buys" asp-action="BuyAll" onmouseover="buttonmouseover('buyall')" onmouseout="buttonmouseout('buyall')">
-                    <i class="fas fa-credit-card"></i>
-                    <span id="buyall" class="visually-hidden">Comprar todo</span>                
-                </a>
+                <div class="d-flex mt-2">
+                    <a class="btn btn-outline-primary me-auto" asp-controller="Packages" asp-action="PackageName" onmouseover="buttonmouseover('addastemplate')" onmouseout="buttonmouseout('addastemplate')">
+                        <i class="fas fa-plus-circle"></i>
+                        <span id="addastemplate" class="visually-hidden">Agregar como plantilla</span>
+                    </a>
+                    <a class="btn btn-success" asp-controller="Buys" asp-action="BuyAll" onmouseover="buttonmouseover('buyall')" onmouseout="buttonmouseout('buyall')">
+                        <i class="fas fa-credit-card"></i>
+                        <span id="buyall" class="visually-hidden">Comprar todo</span>
+                    </a>
+                </div>
             </div>
         </div>
-    </div>
+    </center>
 </div>

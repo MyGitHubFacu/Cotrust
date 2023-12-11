@@ -15,11 +15,8 @@
                 @if (User.Identity != null && User.Identity.IsAuthenticated)
                 {
                     <form asp-action="Contact">
-                        <label class="mt-2">E-mail</label>
-                        <input name="email" type="email" value="@User.FindFirst(System.Security.Claims.ClaimTypes.Email)?.Value" class="form-control" required />
-
-                        <label class="mt-2">Mensaje</label>
-                        <textarea name="body" class="form-control mb-2" style="height:150px;" required></textarea>
+                        <input class="form-control mb-3" name="email" placeholder="E-mail" type="email" value="@User.FindFirst(System.Security.Claims.ClaimTypes.Email)?.Value" required />
+                        <textarea class="form-control mb-2" style="height:150px;" name="body" placeholder="Mensaje" required></textarea>
 
                         <input type="submit" value="Enviar" class="btn btn-primary mb-1 mt-2" />
                     </form>
@@ -27,11 +24,8 @@
                 else
                 {
                     <form asp-action="Contact">
-                        <label class="mt-2">E-mail</label>
-                        <input name="email" type="email" class="form-control" required />
-
-                        <label class="mt-2">Mensaje</label>
-                        <textarea name="body" class="form-control mb-2" style="height:150px;" required></textarea>
+                        <input class="form-control mb-3" name="email" placeholder="E-mail" type="email" required />
+                        <textarea class="form-control mb-2" name="body" placeholder="Mensaje" style="height:150px;" required></textarea>
 
                         <input type="submit" value="Enviar" class="btn btn-primary mb-1 mt-2" />
                     </form>

@@ -17,28 +17,23 @@
                     <input type="hidden" asp-for="Id" />
                     <input type="hidden" asp-for="UserId" />
                     <div class="form-group mb-1">
-                        Domicilio
-                        <input asp-for="Address" class="form-control" />
+                        <input asp-for="Address" class="form-control" placeholder="Domicilio" />
                         <span asp-validation-for="Address" class="text-danger"></span>
                     </div>
                     <div class="form-group mb-1">
-                        Ciudad
-                        <input asp-for="City" class="form-control" />
+                        <input asp-for="City" class="form-control" placeholder="Ciudad" />
                         <span asp-validation-for="City" class="text-danger"></span>
                     </div>
                     <div class="form-group mb-1">
-                        Región
-                        <input asp-for="Region" class="form-control" />
+                        <input asp-for="Region" class="form-control" placeholder="Región" />
                         <span asp-validation-for="Region" class="text-danger"></span>
                     </div>
                     <div class="form-group mb-1">
-                        País
-                        <input asp-for="Country" class="form-control" />
+                        <input asp-for="Country" class="form-control" placeholder="País" />
                         <span asp-validation-for="Country" class="text-danger"></span>
                     </div>
                     <div class="form-group mb-1">
-                        Código postal
-                        <input asp-for="PostalCode" class="form-control" />
+                        <input asp-for="PostalCode" class="form-control" placeholder="Código postal" />
                         <span asp-validation-for="PostalCode" class="text-danger"></span>
                     </div>
                     <div class="form-group mt-3">
@@ -50,12 +45,10 @@
     </div>
 </center>
 
-<div>
-    <a asp-action="Index" class="btn btn-outline-primary" onmouseover="buttonmouseover('goback')" onmouseout="buttonmouseout('goback')">
-        <i class="fas fa-solid fa-arrow-left"></i>
-        <span id="goback" class="visually-hidden">Volver</span>
-    </a>
-</div>
+<a asp-action="Index" class="btn btn-outline-primary" onmouseover="buttonmouseover('goback')" onmouseout="buttonmouseout('goback')">
+    <i class="fas fa-solid fa-arrow-left"></i>
+    <span id="goback" class="visually-hidden">Volver</span>
+</a>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

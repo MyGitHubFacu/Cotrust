@@ -40,13 +40,14 @@
                     <button type="submit" class="btn btn-outline-danger" onmouseover="buttonmouseover('delete')" onmouseout="buttonmouseout('delete')">
                         <i class="fas fa-trash"></i>
                         <span id="delete" class="visually-hidden">Eliminar</span>
-                    </button> |
-                    <a asp-action="Index" class="btn btn-outline-primary" onmouseover="buttonmouseover('goback')" onmouseout="buttonmouseout('goback')">
-                        <i class="fas fa-solid fa-arrow-left"></i>
-                        <span id="goback" class="visually-hidden">Volver</span>
-                    </a>
+                    </button> 
                 </form>
             </div>
         </div>
     </div>
 </center>
+
+<a asp-action="Index" class="btn btn-outline-primary" onmouseover="buttonmouseover('goback')" onmouseout="buttonmouseout('goback')">
+    <i class="fas fa-solid fa-arrow-left"></i>
+    <span id="goback" class="visually-hidden">Volver</span>
+</a>

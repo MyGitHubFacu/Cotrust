@@ -8,74 +8,35 @@
     <div class="card-title">Direcciones</div>
 </div>
 
-<p>
 
-</p>
+<center>
+    <a class="btn btn-outline-primary" asp-action="Create" onmouseover="buttonmouseover('newaddress')" onmouseout="buttonmouseout('newaddress')">
+        <i class="fas fa-plus-circle"></i>
+        <span id="newaddress" class="visually-hidden">Agregar</span>
+    </a>
 
-<div class="text-center">
-    <div class="card shadow mb-5 mt-2 w-100">
-        <div class="card-header py-3">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>
-                            Domicilio
-                        </th>
-                        <th>
-                            Ciudad
-                        </th>
-                        <th>
-                            Región
-                        </th>
-                        <th>
-                            País
-                        </th>
-                        <th>
-                            Código postal
-                        </th>
-                        <th>
-                            <a class="btn btn-outline-primary" asp-action="Create" onmouseover="buttonmouseover('newaddress')" onmouseout="buttonmouseout('newaddress')">
-                                <i class="fas fa-plus-circle"></i>
-                                <span id="newaddress" class="visually-hidden">Agregar</span>
-                            </a>
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in Model)
-                    {
-                        <tr>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Address)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.City)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Region)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Country)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.PostalCode)
-                            </td>
-                            <td>
-                                <a class="btn btn-outline-success me-1" style="width:50px" asp-action="Edit" asp-route-id="@item.Id">
-                                    <i class="fas fa-edit"></i>
-                                </a>
-                                <a class="btn btn-outline-primary me-1 ms-1" style="width:50px" asp-action="Details" asp-route-id="@item.Id">
-                                    <i class="fas fa-info"></i>
-                                </a>
-                                <a class="btn btn-outline-danger ms-1" style="width:50px" asp-action="Delete" asp-route-id="@item.Id">
-                                    <i class="fas fa-trash"></i>
-                                </a>
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div>
+    @foreach (var Item in Model)
+    {        
+        <div class="card shadow mb-2 mt-2" style="width:600px">
+            <div class="card-body border-bottom border-primary border-2">
+                <h5 class="card-text fw-semibold">@Item.Address, @Item.City, @Item.Region, @Item.Country - @Item.PostalCode</h5>
+
+                <div class="input-group mt-1">
+                    <a class="btn btn-outline-success ms-auto me-1" style="width:50px" asp-action="Edit" asp-route-id="@Item.Id">
+                        <i class="fas fa-edit"></i>
+                    </a>
+                    <a class="btn btn-outline-primary me-1 ms-1" style="width:50px" asp-action="Details" asp-route-id="@Item.Id">
+                        <i class="fas fa-info"></i>
+                    </a>
+                    <a class="btn btn-outline-danger ms-1 me-auto" style="width:50px" asp-action="Delete" asp-route-id="@Item.Id">
+                        <i class="fas fa-trash"></i>
+                    </a>
+                </div>
+            </div>
+        </div>      
+    }
+</center>
+
+
+
 

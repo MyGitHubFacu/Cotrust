@@ -21,27 +21,23 @@
         }
         else
         {
-            <div class="card shadow mb-5 mt-2 w-50">
+            <div class="card shadow mb-5 mt-2" style="width:500px">
                 <div class="card-header py-3">
                     <form asp-action="Register" method="post">
-                        <div class="form-group mb-2 mt-2">
-                            Nombre
-                            <input asp-for="Name" class="form-control" />
+                        <div class="form-group mb-3 mt-2">
+                            <input asp-for="Name" class="form-control" placeholder="Nombre" />
                             <span asp-validation-for="Name" class="text-danger"></span>
                         </div>
-                        <div class="form-group mb-2">
-                            E-mail
-                            <input asp-for="Email" type="email" class="form-control" />
+                        <div class="form-group mb-3">
+                            <input asp-for="Email" type="email" class="form-control" placeholder="E-mail" />
                             <span asp-validation-for="Email" class="text-danger"></span>
                         </div>
-                        <div class="form-group mb-2">
-                            Contraseña
-                            <input asp-for="Password" type="password" class="form-control" />
+                        <div class="form-group mb-3">
+                            <input asp-for="Password" type="password" class="form-control" placeholder="Contraseña" />
                             <span asp-validation-for="Password" class="text-danger"></span>
                         </div>
                         <div class="form-group mb-2">
-                            Confirmar contraseña
-                            <input asp-for="Password2" type="password" class="form-control" />
+                            <input asp-for="Password2" type="password" class="form-control" placeholder="Confirmar contraseña" />
                             <span asp-validation-for="Password2" class="text-danger"></span>
                         </div>
                         <input type="submit" value="Registrarme" class="btn btn-primary mb-1 mt-2" />

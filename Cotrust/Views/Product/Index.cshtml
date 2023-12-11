@@ -26,13 +26,12 @@
                     </div> 
                     <p class="lead">@Model.Description</p>
                     <div class="d-flex">
-                        <form asp-controller="Cart" asp-action="AddProduct">
+                        <form class="ms-auto me-auto" asp-controller="Cart" asp-action="AddProduct">
                             <input type="hidden" name="id" value="@Model.Id" />
                             <div class="input-group">                             
                                 <input class="form-control text-center me-1" name="quantity" type="number" min="0" value="1" style="max-width: 5rem" />
-                                <button class="btn btn-outline-dark flex-shrink-0" type="submit">
-                                    <i class="bi-cart-fill me-1"></i>
-                                    Agregar al carrito
+                                <button class="btn btn-outline-dark flex-shrink-0" type="submit" style="width: 4rem">
+                                    <i class="fas fa-fw fa-cart-plus"></i>
                                 </button>
                             </div>                        
                         </form>
