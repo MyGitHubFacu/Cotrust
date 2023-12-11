@@ -10,7 +10,7 @@
 
 <div class="text-center">
     <center>
-        <div class="card shadow mb-5 mt-5 w-100">
+        <div class="card shadow mb-3 mt-2 w-100">
             <div class="card-header py-3">
                 <table class="table">
                     <thead>
@@ -53,3 +53,8 @@
         </div>
     </center>
 </div>
+
+<a asp-action="Index" class="btn btn-outline-primary" onmouseover="buttonmouseover('goback')" onmouseout="buttonmouseout('goback')">
+    <i class="fas fa-solid fa-arrow-left"></i>
+    <span id="goback" class="visually-hidden">Volver</span>
+</a>
