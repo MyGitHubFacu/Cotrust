@@ -74,6 +74,68 @@ namespace Cotrust.Controllers
 
         #endregion
 
+        #region ChangeName
+
+        public async Task<IActionResult> ChangeName(int? id)
+        {
+            try
+            {
+                if (User.Identity != null && User.Identity.IsAuthenticated)
+                {
+                    int ident = Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
+                    User? user = await _context.User.FirstOrDefaultAsync(x => x.Id == ident);
+
+                    if (user != null)
+                    {
+                        if (user.Type == Models.User.TypeOfUser.Admin | user.Type == Models.User.TypeOfUser.Staff)
+                        {
+                            if (id == null || _context.Package == null) { return NotFound(); }
+                            var pack = await _context.Package.FindAsync(id);
+                            if (pack == null) { return NotFound(); }
+                            return View(pack);
+                        }
+                    }
+                }
+                return RedirectToAction("Index", "Home");
+            }
+            catch (Exception ex)
+            {
+                return await HandleError(ex.Message);
+            }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ChangeName(int id, [Bind("Id,UserId,Name")] Package package)
+        {
+            try
+            {
+                if (id != package.Id) { return NotFound(); }
+
+                if (ModelState.IsValid)
+                {
+                    try
+                    {
+                        _context.Update(package);
+                        await _context.SaveChangesAsync();
+                    }
+                    catch (DbUpdateConcurrencyException)
+                    {
+                        if (!PackageExists(package.Id)) { return NotFound(); }
+                        else { throw; }
+                    }
+                    return RedirectToAction(nameof(Index));
+                }
+                return View(package);
+            }
+            catch (Exception ex)
+            {
+                return await HandleError(ex.Message);
+            }
+        }
+
+        #endregion
+
         #region AddPackage
 
         public async Task<IActionResult> PackageName()
@@ -213,6 +275,15 @@ namespace Cotrust.Controllers
             {
                 return await HandleError(ex.Message);
             }
+        }
+
+        #endregion
+
+        #region Others
+
+        private bool PackageExists(int id)
+        {
+            return (_context.Package?.Any(e => e.Id == id)).GetValueOrDefault();
         }
 
         #endregion

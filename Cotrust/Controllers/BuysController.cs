@@ -35,7 +35,7 @@ namespace Cotrust.Controllers
                     {
                         if (_context.Buys == null) { return Problem("Entity set 'CotrustDbContext.Buys'  is null."); }
 
-                        List<Buys> buys = await _context.Buys.Where(x => x.UserId == ident).ToListAsync();
+                        List<Buys> buys = await _context.Buys.Where(x => x.UserId == ident).OrderByDescending(x => x.Date).ToListAsync();
 
                         foreach (Buys b in user.Buys)
                         {
