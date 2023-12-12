@@ -1,7 +1,9 @@
-﻿using Cotrust.Models;
+﻿using Cotrust.Intefaces;
+using Cotrust.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.EntityFrameworkCore;
@@ -14,8 +16,11 @@ namespace Cotrust.Controllers
     {
         #region Context
 
-        public UserController(CotrustDbContext context)
+        private readonly IUtilities _utilities;
+
+        public UserController(CotrustDbContext context, IUtilities utilities)
         {
+            _utilities = utilities;
             _context = context;
         }
 
@@ -46,7 +51,7 @@ namespace Cotrust.Controllers
         {
             try
             {
-                var user = await _context.User.FirstOrDefaultAsync(x => x.Email == email && x.Password == password);
+                var user = await _context.User.FirstOrDefaultAsync(x => x.Email == email && x.Password == _utilities.Encrypting(password));
                 
                 if (user != null)
                 {
@@ -104,6 +109,8 @@ namespace Cotrust.Controllers
                             return View(user);
                         }
                         user.Type = Models.User.TypeOfUser.Customer;
+
+                        user.Password = _utilities.Encrypting(user.Password2);
 
                         _context.Add(user);
                         await _context.SaveChangesAsync();
@@ -203,6 +210,8 @@ namespace Cotrust.Controllers
                 {
                     if (user.Password == user.Password2)
                     {
+                        user.Password = _utilities.Encrypting(user.Password2);
+
                         _context.Update(user);
                         await _context.SaveChangesAsync();
 
@@ -225,6 +234,39 @@ namespace Cotrust.Controllers
                     }
                 }
                 return View(user);
+            }
+            catch (Exception ex)
+            {
+                return await HandleError(ex.Message);
+            }
+        }
+
+        #endregion
+
+        #region Email confirmation
+
+        public async Task<IActionResult> EmailConfirmed(int id)
+        {
+            try
+            {
+                User? user = await _context.User.FirstOrDefaultAsync(x => x.Id == id);
+
+                if (user != null)
+                {
+                    var Identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme);
+                    Identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()));
+                    Identity.AddClaim(new Claim(ClaimTypes.Name, user.Name));
+                    Identity.AddClaim(new Claim(ClaimTypes.Email, user.Email));
+                    Identity.AddClaim(new Claim(ClaimTypes.Role, user.Type.ToString()));
+
+                    await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(Identity));
+
+                    await UploadCart();
+
+                    return View(user);
+                }
+                
+                return RedirectToAction("Index", "Home");
             }
             catch (Exception ex)
             {
