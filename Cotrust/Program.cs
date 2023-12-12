@@ -14,7 +14,7 @@ builder.Services.AddTransient<IUtilities, Utilities>();
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddDbContext<CotrustDbContext>(options =>
-        options.UseSqlServer(builder.Configuration.GetConnectionString("Connection")));
+        options.UseSqlServer(builder.Configuration.GetConnectionString("Connection1")));
 
 builder.Services.AddAuthorization(options =>
 {
