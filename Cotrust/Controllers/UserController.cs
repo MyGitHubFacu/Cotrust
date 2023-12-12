@@ -55,10 +55,17 @@ namespace Cotrust.Controllers
         {
             try
             {
-                var user = await _context.User.FirstOrDefaultAsync(x => x.Email == email && x.Password == _utilities.Encrypting(password));
+                var user = await _context.User.FirstOrDefaultAsync(x => x.Email == email);
                
                 if (user != null)
                 {
+                    if (user.Password != _utilities.Encrypting(password))
+                    {
+                        ViewBag.HasMessage = true;
+                        ViewBag.Message = "Contraseña incorrecta";
+                        return View();
+                    }
+
                     if (user.EmailConfirmed)
                     {
                         var Identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme);
