@@ -13,7 +13,7 @@
 
         <div class="card shadow mb-2 mt-2 w-100" style="max-width:600px">
             <div class="card-header">
-                <a class="card-text me-auto text-decoration-none text-dark" asp-controller="Packages" asp-action="ChangeName" asp-route-id="@Model.First().PackageId" onmouseover="namemouseover('ncart @Model.First().PackageId')" onmouseout="namemouseout('ncart @Model.First().PackageId')">
+                <a class="card-text me-auto text-decoration-none text-dark" asp-controller="Packages" asp-action="ChangeName" asp-route-id="@Model.First().PackageId" onmouseover="namemouseover('ncart @Model.First().PackageId')" onmouseout="namemouseout('ncart @Model.First().PackageId')" data-toggle="tooltip" data-placement="bottom" title="Cambiar nombre">
                     <h3 id="ncart @Model.First().PackageId" class="fw-bold">@ViewData["PackageName"]</h3>
                 </a>                
             </div>
