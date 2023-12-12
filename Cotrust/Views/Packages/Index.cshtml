@@ -12,26 +12,28 @@
     <center>
         @foreach (var Item in Model)
         {
-            <div class="card shadow mb-2 mt-2" style="width:500px">
+            <div class="card shadow mb-2 mt-2 w-100" style="max-width:600px">
                 <div class="card-body border-bottom border-primary border-2">
 
                     <div class="input-group ">
-                        <h5 class="card-text fw-semibold me-auto">@Item.Name</h5>
-                        <h5>
-                            <a asp-controller="Packages" asp-action="Products" asp-route-id="@Item.Id">
-                                Productos: @Item.Products?.Count
-                            </a>
-                        </h5>                       
+                        <a class="card-text me-auto text-decoration-none text-dark bg-transparent" asp-controller="Packages" asp-action="Products" asp-route-id="@Item.Id" onmouseover="namemouseover('ncart @Item.Id')" onmouseout="namemouseout('ncart @Item.Id')">
+                            <h5 id="ncart @Item.Id" class="fw-bold">@Item.Name</h5>
+                        </a>
+                        <a class="card-text text-decoration-none text-dark bg-transparent" asp-controller="Packages" asp-action="Products" asp-route-id="@Item.Id" onmouseover="namemouseover('pcart @Item.Id')" onmouseout="namemouseout('pcart @Item.Id')">
+                            <h6 id="pcart @Item.Id" class="fw-bold">Productos: @Item.Products?.Count</h6>
+                        </a>                   
                     </div>
                     
 
                     <div class="input-group mt-1">
-                        <a class="btn btn-outline-success me-1" style="width:50px" asp-controller="Packages" asp-action="AddToCart" asp-route-id="@Item.Id">
-                            <i class="fas fa-plus-circle"></i>
-                        </a>
-                        <a class="btn btn-outline-danger ms-1" style="width:50px" asp-controller="Packages" asp-action="DeletePackage" asp-route-id="@Item.Id">
+                        <a class="text-decoration-none me-auto" asp-controller="Packages" asp-action="DeletePackage" asp-route-id="@Item.Id">
                             <i class="fas fa-trash"></i>
+                            Eliminar
                         </a>
+                        <a class="text-decoration-none" asp-controller="Packages" asp-action="AddToCart" asp-route-id="@Item.Id">
+                            <i class="fas fa-plus-circle"></i>
+                            Agregar al carrito
+                        </a>                        
                     </div>
                 </div>
             </div>

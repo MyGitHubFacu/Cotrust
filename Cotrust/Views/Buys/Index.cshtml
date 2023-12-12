@@ -10,9 +10,9 @@
 
 @foreach (var Item in Model)
 {
-    <div class="card shadow mb-2 mt-2 ms-auto me-auto" style="width:600px">
+    <div class="card shadow mb-2 mt-2 ms-auto me-auto w-100" style="max-width:700px">
         <div class="card-body border-bottom border-primary border-2">
-            <h5 class="card-text me-auto">@Item.Direction</h5>
+            <h5 class="card-text ms-auto me-auto">@Item.Direction</h5>
                     
             <div class="input-group">
                 <div class="card-text mt-2 me-auto" style="color:grey">@Item.Date</div>
