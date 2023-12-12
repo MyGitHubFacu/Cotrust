@@ -16,9 +16,14 @@
                     <input class="form-control mt-2" name="email" placeholder="E-mail" type="email" required />
 
                     @*<label class="mt-2">Contraseña</label>*@
-                    <input class="form-control mt-3 mb-2" name="password" placeholder="Contraseña" type="password" required />
+                    <input class="form-control mt-3 mb-1" name="password" placeholder="Contraseña" type="password" required />
 
-                    <input type="submit" value="Ingresar" class="btn btn-primary mb-1 mt-2" />
+                    @if (ViewBag.HasMessage)
+                    {
+                        <span class="text-danger">@ViewBag.Message</span>
+                    }                                        
+                    
+                    <input type="submit" value="Ingresar" class="btn btn-primary mb-1 mt-3" />
                 </form>
 
                 <a asp-action="Register">Crear una cuenta</a>

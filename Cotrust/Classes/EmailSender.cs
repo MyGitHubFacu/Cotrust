@@ -8,7 +8,7 @@ namespace Cotrust.Classes
     {
         public Task SendEmailAsync(string email, string subject, string body)
         {
-            var mail = "facundosola11@hotmail.com.ar";
+            var mail = "facundosola11@hotmail.com";
             var pw = "kpv0slender";
 
             var client = new SmtpClient("smtp-mail.outlook.com", 587)
