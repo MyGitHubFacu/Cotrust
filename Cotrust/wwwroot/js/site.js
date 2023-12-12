@@ -63,3 +63,23 @@ function nextimage() {
 function previmage() {
     changeimage(slideIndex - 1);
 }
+
+
+/*SHADOWS*/
+function imagemouseover(id) {
+    div = document.getElementById(id)
+    div.className = "card-img me-auto shadow"
+}
+function imagemouseout(id) {
+    div = document.getElementById(id)
+    div.className = "card-img me-auto"
+}
+
+function namemouseover(id) {
+    div = document.getElementById(id)
+    div.className = "fw-semibold"
+}
+function namemouseout(id) {
+    div = document.getElementById(id)
+    div.className = "fw-bold"
+}
