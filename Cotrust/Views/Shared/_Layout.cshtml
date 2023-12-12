@@ -39,16 +39,16 @@
                             /*Verifica si el usuario es Admin o Staff y activa los controles necesarios*/
                             if (User.FindFirst(System.Security.Claims.ClaimTypes.Role)?.Value == Cotrust.Models.User.TypeOfUser.Staff.ToString() | User.FindFirst(System.Security.Claims.ClaimTypes.Role)?.Value == Cotrust.Models.User.TypeOfUser.Admin.ToString())
                             {
-                                <li class="nav-item" onmouseover="layoutmouseover('products')" onmouseout="layoutmouseout('products')">
-                                    <a id="products" class="nav-link text-center active fs-4" asp-area="" asp-controller="Products" asp-action="Index">Productos</a>
+                                <li class="nav-item text-center mt-auto mb-auto" onmouseover="menumouseover('products')" onmouseout="menumouseout('products')">
+                                    <a id="products" class="navbar-brand" asp-area="" asp-controller="Products" asp-action="Index">Productos</a>
                                 </li>
                             }
 
                             /*Verifica si el usuario es Admin y activa los controles necesarios*/
                             if (User.FindFirst(System.Security.Claims.ClaimTypes.Role)?.Value == Cotrust.Models.User.TypeOfUser.Admin.ToString())
-                            {                               
-                                <li class="nav-item" onmouseover="layoutmouseover('usuarios')" onmouseout="layoutmouseout('usuarios')">
-                                    <a id="usuarios" class="nav-link text-center active fs-4" asp-area="" asp-controller="Users" asp-action="Index">Usuarios</a>
+                            {
+                                <li class="nav-item text-center mt-auto mb-auto" onmouseover="menumouseover('usuarios')" onmouseout="menumouseout('usuarios')">
+                                    <a id="usuarios" class="navbar-brand" asp-area="" asp-controller="Users" asp-action="Index">Usuarios</a>
                                 </li>
                             }                          
                         }
@@ -59,18 +59,18 @@
                             @if (Convert.ToInt32(ViewData["Products"]) > 0)
                             {
                                 <li class="text-center">
-                                    <a class="btn btn-outline-dark" asp-controller="Cart" asp-action="Index">
+                                    <a class="btn btn-outline-primary" asp-controller="Cart" asp-action="Index">
                                         <i class="fas fa-fw fa-shopping-cart"></i>
-                                        <span>@ViewData["Products"]</span>
+                                        <span class="fw-semibold">@ViewData["Products"]</span>
                                     </a>
                                 </li>                                
                             }
                             else
                             {
                                 <li class="text-center">
-                                    <a class="btn btn-outline-secondary " asp-controller="Cart" asp-action="Index">
+                                    <a class="btn btn-outline-secondary" asp-controller="Cart" asp-action="Index">
                                         <i class="fas fa-fw fa-shopping-cart"></i>
-                                        <span>0</span>
+                                        <span class="fw-semibold">0</span>
                                     </a>
                                 </li>                              
                             }
@@ -82,15 +82,16 @@
                                         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                                             <li class="navbar-collapse dropdown">
                                                 <a class="input-group navbar-collapse dropdown-toggle text-body text-decoration-none" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
+                                                    
                                                     <div class="text-black fw-semibold">@User.Identity.Name</div>
                                                     <i class="fas fa-fw fa-user"></i>
                                                 </a>
-                                                <ul class="dropdown-menu text-body" aria-labelledby="navbarDropdown">
+                                                <ul class="dropdown-menu dropdown-menu-end text-body" aria-labelledby="navbarDropdown">
                                                     <li><a class="dropdown-item text-body" asp-area="" asp-controller="User" asp-action="Account">Cuenta</a></li>
                                                     <li><a class="dropdown-item text-body" asp-area="" asp-controller="Buys" asp-action="Index">Compras</a></li>
                                                     <li><a class="dropdown-item text-body" asp-area="" asp-controller="Directions" asp-action="Index">Direcciones</a></li>
                                                     <li><a class="dropdown-item text-body" asp-area="" asp-controller="Packages" asp-action="Index">Plantillas</a></li>
-                                                    <li><hr class="dropdown-divider" /></li>
+                                                    <li><div class="dropdown-divider" /></li>
                                                     <li><a class="dropdown-item text-body" asp-area="" asp-controller="User" asp-action="Logout">Cerrar sesión</a></li>
                                                 </ul>
                                             </li>
