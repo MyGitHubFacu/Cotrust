@@ -1,7 +1,7 @@
 ﻿@model Cotrust.Models.User
 
 @{
-    ViewData["Title"] = "Register";
+    ViewData["Title"] = "User";
 }
 
 <div class="text-center mt-2">
@@ -21,7 +21,7 @@
         }
         else
         {
-            <div class="card shadow mb-5 mt-2" style="width:500px">
+            <div class="card shadow mb-5 mt-2 w-100" style="max-width:600px">
                 <div class="card-header py-3">
                     <form asp-action="Register" method="post">
                         <div class="form-group mb-3 mt-2">
