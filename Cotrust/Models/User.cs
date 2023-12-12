@@ -20,6 +20,7 @@ namespace Cotrust.Models
         public string Name { get; set; } = null!;
         public string Email { get; set; } = null!;
         public string Password { get; set; } = null!;
+        public string Token { get; set; } = null!;
         public bool EmailConfirmed { get; set; } = false;
         public TypeOfUser Type { get; set; }
         public ICollection<Direction> Directions { get; set; }

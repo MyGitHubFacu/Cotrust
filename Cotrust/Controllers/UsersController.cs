@@ -159,7 +159,7 @@ namespace Cotrust.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Email,Password,Type,EmailConfirmed")] User user)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Email,Password,Type,EmailConfirmed,Token")] User user)
         {
             try
             {

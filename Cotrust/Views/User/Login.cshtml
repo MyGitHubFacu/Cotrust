@@ -16,8 +16,13 @@
                     <input class="form-control mt-2" name="email" placeholder="E-mail" type="email" required />
 
                     @*<label class="mt-2">Contraseña</label>*@
-                    <input class="form-control mt-3 mb-2" name="password" placeholder="Contraseña" type="password" required />
+                    <input class="form-control mt-3 mb-1" name="password" placeholder="Contraseña" type="password" required />
 
+                    @if (ViewBag.HasMessage)
+                    {
+                        <div class="text-danger">@ViewBag.Message</div>
+                    }                                        
+                    
                     <input type="submit" value="Ingresar" class="btn btn-primary mb-1 mt-2" />
                 </form>
 

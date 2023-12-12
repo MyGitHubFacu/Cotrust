@@ -3,6 +3,7 @@ using Cotrust.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
@@ -14,14 +15,16 @@ namespace Cotrust.Controllers
 {
     public class UserController : BaseController
     {
-        #region Context
+        #region Services
 
         private readonly IUtilities _utilities;
+        private readonly IEmailSender _emailsender;
 
-        public UserController(CotrustDbContext context, IUtilities utilities)
+        public UserController(CotrustDbContext context, IUtilities utilities, IEmailSender emailsender)
         {
-            _utilities = utilities;
             _context = context;
+            _utilities = utilities;
+            _emailsender = emailsender;
         }
 
         #endregion
@@ -37,6 +40,7 @@ namespace Cotrust.Controllers
                 {
                     return RedirectToAction("Index", "Home");
                 }
+                ViewBag.HasMessage = false;
                 return View();
             }
             catch (Exception ex)
@@ -52,22 +56,29 @@ namespace Cotrust.Controllers
             try
             {
                 var user = await _context.User.FirstOrDefaultAsync(x => x.Email == email && x.Password == _utilities.Encrypting(password));
-                
+               
                 if (user != null)
                 {
-                    var Identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme);
-                    Identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()));
-                    Identity.AddClaim(new Claim(ClaimTypes.Name, user.Name));
-                    Identity.AddClaim(new Claim(ClaimTypes.Email, user.Email));                  
-                    Identity.AddClaim(new Claim(ClaimTypes.Role, user.Type.ToString()));
+                    if (user.EmailConfirmed)
+                    {
+                        var Identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme);
+                        Identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()));
+                        Identity.AddClaim(new Claim(ClaimTypes.Name, user.Name));
+                        Identity.AddClaim(new Claim(ClaimTypes.Email, user.Email));
+                        Identity.AddClaim(new Claim(ClaimTypes.Role, user.Type.ToString()));
 
-                    await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(Identity));
+                        await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(Identity));
 
-                    return RedirectToAction("Index", "Home");
+                        return RedirectToAction("Index", "Home");
+                    }
+
+                    ViewBag.HasMessage = true;
+                    ViewBag.Message = "Confirmar e-mail para poder ingresar";
+                    return View();
                 }
 
-                /*Ver como mostrar el error*/
-                ModelState.AddModelError("", "Usuario no encontrado.");
+                ViewBag.HasMessage = true;
+                ViewBag.Message = "Usuario no encontrado";
                 return View();
             }   
             catch (Exception ex)
@@ -111,17 +122,14 @@ namespace Cotrust.Controllers
                         user.Type = Models.User.TypeOfUser.Customer;
 
                         user.Password = _utilities.Encrypting(user.Password2);
+                        user.Token = _utilities.GenerateToken();
+
+                        string? url = Url.ActionLink("EmailConfirmed", "User", new { token = user.Token });
+                        await _emailsender.SendEmailAsync(user.Email, "Confirmar correo", "Click aquí: " + url);
 
                         _context.Add(user);
                         await _context.SaveChangesAsync();
-
-                        var Identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme);
-                        Identity.AddClaim(new Claim(ClaimTypes.Name, user.Name));
-                        Identity.AddClaim(new Claim(ClaimTypes.Email, user.Email));
-                        Identity.AddClaim(new Claim(ClaimTypes.Role, user.Type.ToString()));
-
-                        await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(Identity));
-
+                   
                         return RedirectToAction("Index", "Home");
                     }
                     else
@@ -245,14 +253,19 @@ namespace Cotrust.Controllers
 
         #region Email confirmation
 
-        public async Task<IActionResult> EmailConfirmed(int id)
+        [AllowAnonymous]
+        public async Task<IActionResult> EmailConfirmed(string token)
         {
             try
             {
-                User? user = await _context.User.FirstOrDefaultAsync(x => x.Id == id);
+                User? user = await _context.User.FirstOrDefaultAsync(x => x.Token == token);
 
                 if (user != null)
                 {
+                    user.EmailConfirmed = true;
+                    _context.Update(user);
+                    await _context.SaveChangesAsync();
+
                     var Identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme);
                     Identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()));
                     Identity.AddClaim(new Claim(ClaimTypes.Name, user.Name));
@@ -263,10 +276,12 @@ namespace Cotrust.Controllers
 
                     await UploadCart();
 
-                    return View(user);
+                    ViewBag.Message = "E-mail confirmado con exito";
+                    return View();
                 }
-                
-                return RedirectToAction("Index", "Home");
+
+                ViewBag.Message = "No se pudo confirmar el E-mail";
+                return View();
             }
             catch (Exception ex)
             {
