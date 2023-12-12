@@ -15,6 +15,7 @@ namespace Cotrust.Controllers
         #region Services
 
         private readonly IEmailSender _emailsender;
+
         public HomeController(CotrustDbContext context, IEmailSender emailSender)
         {
             _context = context;
