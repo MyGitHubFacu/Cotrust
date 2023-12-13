@@ -109,7 +109,7 @@ namespace Cotrust.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Email,Password,Type,EmailConfirmed")] User user)
+        public async Task<IActionResult> Create([Bind("Id,Name,Email,Password,Type,EmailConfirmed,Token")] User user)
         {
             try
             {
