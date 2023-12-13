@@ -11,7 +11,7 @@ namespace Cotrust.Classes
             var mail = "facundosola11@hotmail.com";
             var pw = "kpv0slender";
 
-            var client = new SmtpClient("smtp-mail.outlook.com", 587)
+            var client = new SmtpClient("smtp-mail.outlook.com", 25)
             {
                 EnableSsl = true,
                 Credentials = new NetworkCredential(mail, pw),
