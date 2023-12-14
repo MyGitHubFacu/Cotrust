@@ -17,7 +17,7 @@
     <div class="card shadow mb-4 me-3 w-25">
         <form asp-action="Index" class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
             <div class="input-group">
-                <select name="kind" class="form-control bg-white border-0 small" aria-describedby="basic-addon2" asp-items="Html.GetEnumSelectList<Cotrust.Models.Product.TypeOfProduct>()"></select>
+                <select name="kind" class="form-control bg-white border-0 small" aria-describedby="basic-addon2" asp-items="@ViewBag.Kinds"></select>
                 <input type="submit" value="Filtrar" class="btn btn-primary" />
             </div>
         </form>

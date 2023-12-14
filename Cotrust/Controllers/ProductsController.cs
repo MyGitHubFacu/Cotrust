@@ -38,8 +38,27 @@ namespace Cotrust.Controllers
                         if (user.Type == Models.User.TypeOfUser.Admin | user.Type == Models.User.TypeOfUser.Staff)
                         {
                             if (_context.Product == null) { return Problem("Entity set 'CotrustDbContext.Product'  is null."); }
-                            if (kind != null) { return View(await _context.Product.Where(x => x.Kind == kind).ToListAsync()); }
-                            else { return View(await _context.Product.ToListAsync()); }
+
+                            List<SelectListItem> List = new List<SelectListItem>
+                            {
+                                new SelectListItem(Product.TypeOfProduct.PLC.ToString(), Product.TypeOfProduct.PLC.ToString(), false),
+                                new SelectListItem(Product.TypeOfProduct.Module.ToString(), Product.TypeOfProduct.Module.ToString(), false),
+                                new SelectListItem(Product.TypeOfProduct.HMI.ToString(), Product.TypeOfProduct.HMI.ToString(), false),
+                                new SelectListItem(Product.TypeOfProduct.Servo.ToString(), Product.TypeOfProduct.Servo.ToString(), false),
+                                new SelectListItem(Product.TypeOfProduct.Driver.ToString(), Product.TypeOfProduct.Driver.ToString(), false),
+                                new SelectListItem(Product.TypeOfProduct.Software.ToString(), Product.TypeOfProduct.Software.ToString(), false),
+                                new SelectListItem(Product.TypeOfProduct.Kits.ToString(), Product.TypeOfProduct.Kits.ToString(), false)
+                            };
+
+                            ViewBag.Kinds = List;
+
+                            if (kind != null)
+                            {
+                                List.First(x => x.Text == kind.ToString()).Selected = true;
+                                
+                                return View(await _context.Product.Where(x => x.Kind == kind).ToListAsync());
+                            }
+                            else { return View(await _context.Product.ToListAsync()); }           
                         }
                     }
                 }
@@ -209,7 +228,7 @@ namespace Cotrust.Controllers
                         if (!ProductExists(product.Id)) { return NotFound(); }
                         else { throw; }
                     }
-                    return RedirectToAction(nameof(Index));
+                    return RedirectToAction(nameof(Index), new { kind = product.Kind });
                 }
                 return View(product);
             }
@@ -261,7 +280,7 @@ namespace Cotrust.Controllers
                 var product = await _context.Product.FindAsync(id);
                 if (product != null) { _context.Product.Remove(product); }
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index), new { kind = product.Kind });
             }
             catch (Exception ex)
             {
